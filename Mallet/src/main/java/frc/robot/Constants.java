@@ -47,13 +47,14 @@ public final class Constants {
         public static final double tolerance = 5; // 5 degree tolerance
     }   
     
-    public static final class K_ClawSub {
-        public static final boolean isUsingClaw = false;    //If is using the claw subsystem
+    public static final class K_IntakeSub{
+        public static final boolean isUsingIntake = true;    //If is using the claw subsystem
         public static final double calibrateStartingAngle = 90;
         public static final double calibrateEndingAngle = 180;
         public static final double calibrateAngleEncoderValue = 9.57146931;
         public static final double clampVoltage = 1.5;
         public static final double coneMaxCurrent = .3;
         public static final double cubeMaxCurrent = .2;
+        public static final double voltage = .8;
     }
 }

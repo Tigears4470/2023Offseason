@@ -1,16 +1,15 @@
 package frc.robot.commands.claw;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClawSub;
+import frc.robot.subsystems.IntakeSub;
 
-public class ClawClose extends CommandBase {
-    // Required Subsystems
-    private ClawSub m_claw;
+public class IntakeEmergencyStop extends CommandBase{
+    private IntakeSub myIntake;
 
     // Creation Function of the Class
-    public ClawClose(ClawSub claw) {
-        m_claw = claw;
-        addRequirements(m_claw);
+    public IntakeEmergencyStop(IntakeSub intake) {
+        myIntake = intake;
+        addRequirements(intake);
     }
 
     // Called when the command is initially scheduled.
@@ -22,8 +21,7 @@ public class ClawClose extends CommandBase {
     // Relatively change claw by joystick
     @Override
     public void execute() {
-        m_claw.setOpen(false);
-        m_claw.moveClaw();    
+        myIntake.emergencyStop();;
     }
 
     // Called once the command ends or is interrupted.
@@ -31,6 +29,7 @@ public class ClawClose extends CommandBase {
     // motor.
     @Override
     public void end(boolean interrupted) {
+        myIntake.emergencyStop();;
     }
 
     // Returns true when the command should end.

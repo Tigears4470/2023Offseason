@@ -7,7 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.K_ClawSub;
+import frc.robot.Constants.K_IntakeSub;
 
 public class IntakeSub extends SubsystemBase{
   // Idle - Break
@@ -16,12 +16,11 @@ public class IntakeSub extends SubsystemBase{
   private final RelativeEncoder encoder;
 
   // -1 = grab, 0 = idle, 1 = throw
-  private int direction;
+  private double direction;
   // controls speed of motor
-  private double voltage;
   
   public IntakeSub(){
-    if(K_ClawSub.isUsingClaw){
+    if(K_IntakeSub.isUsingIntake){
       motor = new CANSparkMax(7, MotorType.kBrushless);
       encoder = motor.getEncoder();
       direction = 0;
@@ -45,20 +44,21 @@ public class IntakeSub extends SubsystemBase{
   }
 
   //Return if the intake is grabbing or throwing or neither
-  public int getDirection(){
-    if(K_ClawSub.isUsingClaw){
+  public double getDirection(){
+    if(K_IntakeSub.isUsingIntake){
         return direction;
     }
     return 0;
   }
 
-  public void setDirection(int newDirection) {
-    direction = newDirection;
+  // -1, 0, or 1
+  public void setDirection(double newDirection) {
+    direction = Math.signum(newDirection);
   }
 
   // returns current through motor
   public double getCurrent() {
-    if(K_ClawSub.isUsingClaw){
+    if(K_IntakeSub.isUsingIntake){
       return motor.getOutputCurrent();
     }
     return 0.0;
@@ -71,8 +71,9 @@ public class IntakeSub extends SubsystemBase{
 
   @Override
   public void periodic() {
-    if (K_ClawSub.isUsingClaw) {
-      motor.setVoltage(direction * voltage);
+    if (K_IntakeSub.isUsingIntake) {
+      motor.setVoltage(direction * K_IntakeSub.voltage);
+
       SmartDashboard.putNumber("Claw Encoder", encoder.getPosition());
       SmartDashboard.putNumber("Claw Direction", direction);
     }

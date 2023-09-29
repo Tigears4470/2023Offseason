@@ -9,6 +9,7 @@ public class IntakeGrab extends CommandBase{
     // Creation Function of the Class
     public IntakeGrab(IntakeSub intake) {
         myIntake = intake;
+        addRequirements(intake);
     }
 
     // Called when the command is initially scheduled.
@@ -20,7 +21,7 @@ public class IntakeGrab extends CommandBase{
     // Relatively change claw by joystick
     @Override
     public void execute() {
-        myIntake.setDirection(-1);
+        myIntake.setDirection(-.2);
     }
 
     // Called once the command ends or is interrupted.
@@ -28,11 +29,12 @@ public class IntakeGrab extends CommandBase{
     // motor.
     @Override
     public void end(boolean interrupted) {
+        myIntake.setDirection(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

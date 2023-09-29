@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.HashMap;
+
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -11,19 +13,32 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.*;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.MoveDistance;
+import frc.robot.commands.ResetEncoders;
+import frc.robot.commands.AutoGroups.AutoGroup_Balance;
+import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
 import frc.robot.commands.claw.ClawDecrementPosition;
 import frc.robot.commands.claw.ClawIncrementPositionV2;
 import frc.robot.commands.claw.ClawMove;
 import frc.robot.commands.claw.ClawToggle;
+import frc.robot.commands.claw.IntakeEmergencyStop;
+import frc.robot.commands.claw.IntakeGrab;
+import frc.robot.commands.claw.IntakeGrabContinuous;
+import frc.robot.commands.claw.IntakeStop;
+import frc.robot.commands.claw.IntakeThrow;
+import frc.robot.commands.claw.IntakeThrowContinuous;
 import frc.robot.commands.extend.MoveExtenderBackwardsPID;
 import frc.robot.commands.extend.MoveExtenderForwardPID;
 import frc.robot.commands.pivot.PivotDownPID;
 import frc.robot.commands.pivot.PivotUpPID;
-import frc.robot.commands.AutoGroups.AutoGroup_Balance;
-import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
-import frc.robot.subsystems.*;
-import java.util.HashMap;
+import frc.robot.subsystems.ClawSub;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.ExtensionSubPID;
+import frc.robot.subsystems.GyroScope;
+import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.PivotSubPID;
 
 public class RobotContainer {
   // INIT SUBSYSTEMS
@@ -33,6 +48,7 @@ public class RobotContainer {
   private static final PivotSubPID m_pivotMotor = new PivotSubPID();
   private static final ClawSub m_clawMotor = new ClawSub();
   private static final ExtensionSubPID m_extensionMotor = new ExtensionSubPID();
+  private static final IntakeSub m_intake = new IntakeSub();
 
   // INIT JOYSTICKS (NOTE: PLEASE RENAME TO LEFT/RIGHT)
   public static Joystick m_controller_arm = new Joystick(0);
@@ -178,13 +194,20 @@ public class RobotContainer {
     // // select cube mode
     // controllerButtons_arm.get("7").onTrue(new SetCubeMode(m_limelight, m_clawMotor));
     //close claw
-    controllerButtons_arm.get("8").whileTrue(new ClawDecrementPosition(m_clawMotor));
+    // controllerButtons_arm.get("8").whileTrue(new ClawDecrementPosition(m_clawMotor));
     //open claw
-    controllerButtons_arm.get("9").whileTrue(new ClawIncrementPositionV2(m_clawMotor));
+    // controllerButtons_arm.get("9").whileTrue(new ClawIncrementPositionV2(m_clawMotor));
 
     // controllerButtons_arm.get("10").onTrue(new Group_RetractAll(m_pivotMotor, m_extensionMotor));
     // move arm to have a 90 degree with the floor
     // controllerButtons_arm.get("11").onTrue(new PivotAngle(m_pivotMotor, 90));
+    controllerButtons_arm.get("8").onTrue(resetEncodersCommand());
+    controllerButtons_arm.get("1").onTrue(new IntakeGrabContinuous(m_intake));
+    controllerButtons_arm.get("2").onTrue(new IntakeStop(m_intake));
+    controllerButtons_arm.get("3").onTrue(new IntakeThrowContinuous(m_intake));
+    controllerButtons_arm.get("4").onTrue(new IntakeEmergencyStop(m_intake));
+    controllerButtons_arm.get("5").whileTrue(new IntakeGrab(m_intake));
+    controllerButtons_arm.get("6").whileTrue(new IntakeThrow(m_intake));
   }
 
   public Command getAutoInput() {
