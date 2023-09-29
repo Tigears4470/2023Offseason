@@ -23,7 +23,7 @@ public class ClawSub extends SubsystemBase{
   
   public ClawSub(){
     if(K_IntakeSub.isUsingIntake){
-      motor = new CANSparkMax(7, MotorType.kBrushless);
+      motor = new CANSparkMax(8, MotorType.kBrushless);
       encoder = motor.getEncoder();
       motor.setIdleMode(IdleMode.kBrake);
       // set conversion factor so getPosition returns degrees

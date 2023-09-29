@@ -54,6 +54,7 @@ public class IntakeSub extends SubsystemBase{
   // -1, 0, or 1
   public void setDirection(double newDirection) {
     direction = Math.signum(newDirection);
+    motor.setVoltage(direction * K_IntakeSub.voltage);
   }
 
   // returns current through motor
@@ -72,10 +73,7 @@ public class IntakeSub extends SubsystemBase{
   @Override
   public void periodic() {
     if (K_IntakeSub.isUsingIntake) {
-      motor.setVoltage(direction * K_IntakeSub.voltage);
-
-      SmartDashboard.putNumber("Claw Encoder", encoder.getPosition());
-      SmartDashboard.putNumber("Claw Direction", direction);
+      // motor.setVoltage(direction * K_IntakeSub.voltage);
     }
   }
 }
