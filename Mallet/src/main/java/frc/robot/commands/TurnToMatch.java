@@ -16,7 +16,6 @@ public class TurnToMatch extends CommandBase {
         m_gyro = p_gyro;
         turnDestination = angle;
         addRequirements(m_drivetrain);
-        addRequirements(m_gyro);
     }
 
     public float getGyroZ360(){ //return the gyro position in the range 0 to 359
