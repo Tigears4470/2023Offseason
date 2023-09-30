@@ -16,11 +16,10 @@ public class TurnBy extends CommandBase {
         m_gyro = p_gyro;
         turnAmount = angle;
         addRequirements(m_drivetrain);
-        addRequirements(m_gyro);
     }
 
     public float getGyroZ360(){ //return the gyro position in the range 0 to 359
-        float angle = m_gyro.getAngleZ();
+        float angle = m_gyro.getAngleZ(); //gyro originally returns a value from -180 to 180
         if(angle<0) angle += 360;
         return angle;
     }
@@ -31,7 +30,7 @@ public class TurnBy extends CommandBase {
         finalAngle = getGyroZ360() + turnAmount; //determine final angle based on current position and the angle to turn by
         finalAngle = (finalAngle+360)%360; // Properly converts final angle to a positive number (ex: 45 degrees and goes counter-clockwise by 90 degrees would be 270 or -90)
 
-        turnDirection = -Math.signum(turnAmount);
+        
     }
   
     // Called every time the scheduler runs while the command is scheduled.
@@ -40,7 +39,7 @@ public class TurnBy extends CommandBase {
         double distance = Math.abs(finalAngle - getGyroZ360()); //find distance from the target angle
         if(distance > 180) distance = Math.abs(distance-360); //wrap around distance
         double speed = 2*Math.max(Constants.K_MIN_TURNING_SPEED,Math.min(Constants.K_MAX_TURNING_SPEED, (.01*(distance-10)+.2))); //set speed dynamically to slow down as we approach the target angle
-
+        turnDirection = Math.signum(turnAmount);
         m_drivetrain.arcadeDrive(0, speed*turnDirection);
     }
   

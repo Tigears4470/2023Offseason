@@ -17,7 +17,6 @@ public class TurnToTarget extends CommandBase {
         m_gyro = p_gyro;
         turnAmount = p_limelight.getXOffset();
         addRequirements(m_drivetrain);
-        addRequirements(m_gyro);
     }
 
     public float getGyroZ360(){ //return the gyro position in the range 0 to 359

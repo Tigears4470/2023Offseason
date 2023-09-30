@@ -30,7 +30,6 @@ public class AutoBalance extends CommandBase {
     isBackwards = backwards;
     m_gyro = gyro;
     m_drivetrain = drivetrain;
-    addRequirements(gyro);
     addRequirements(drivetrain);
   }
 
