@@ -46,7 +46,7 @@ public class RobotContainer {
   private static final Limelight m_limelight = new Limelight();
   private static final GyroScope m_gyro = new GyroScope();
   private static final PivotSubPID m_pivotMotor = new PivotSubPID();
-  private static final ClawSub m_clawMotor = new ClawSub();
+  // private static final ClawSub m_clawMotor = new ClawSub();
   private static final ExtensionSubPID m_extensionMotor = new ExtensionSubPID();
   private static final IntakeSub m_intake = new IntakeSub();
 
@@ -72,7 +72,7 @@ public class RobotContainer {
    */
   private GenericEntry entry_GyroZ = main.add("Yaw (Side to Side)", 0).withWidget(BuiltInWidgets.kGyro).getEntry();
   // CLAW INFO
-  private GenericEntry entry_ClawEncoder = main.add("Claw Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
+  // private GenericEntry entry_ClawEncoder = main.add("Claw Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
   // PIVOT INFO
   private GenericEntry entry_PivotEncoder = main.add("Pivot Encoder", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
@@ -117,7 +117,7 @@ public class RobotContainer {
     // //LIMELIGHT INFO
     entry_LimelightXOffset.setDouble(m_limelight.getXOffset());
     entry_LimelightYOffset.setDouble(m_limelight.getYOffset());
-    entry_ClawClosed.setBoolean(m_clawMotor.getIsOpen());
+    // entry_ClawClosed.setBoolean(m_clawMotor.getIsOpen());
   }
 
   public void initializeAutoChooser() {
@@ -180,7 +180,7 @@ public class RobotContainer {
     //ARM CONTROLLER
     // toggle claw clamp
     // controllerButtons_arm.get("1").toggleOnTrue(Commands.startEnd(m_clawMotor::clamp2, m_clawMotor::moveMotors, m_clawMotor));
-    controllerButtons_arm.get("trigger").onTrue(new ClawToggle(m_clawMotor));
+    // controllerButtons_arm.get("trigger").onTrue(new ClawToggle(m_clawMotor));
     // moves pivot down
     controllerButtons_arm.get("2").whileTrue(new PivotDownPID(m_pivotMotor));
     // moves pivot up

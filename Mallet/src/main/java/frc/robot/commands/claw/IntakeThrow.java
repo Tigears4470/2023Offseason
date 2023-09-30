@@ -29,12 +29,12 @@ public class IntakeThrow extends CommandBase{
     // motor.
     @Override
     public void end(boolean interrupted) {
-        myIntake.setDirection(1);
+        myIntake.setDirection(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

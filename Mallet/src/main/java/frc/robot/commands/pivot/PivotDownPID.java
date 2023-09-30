@@ -22,7 +22,7 @@ public class PivotDownPID extends CommandBase{
     // Tells the pivot motor to go up
     @Override
     public void execute() {
-        m_pivot.changeAngle(-1.5);
+        m_pivot.changeAngle(-1);
     }
 
     // Called once the command ends or is interrupted.

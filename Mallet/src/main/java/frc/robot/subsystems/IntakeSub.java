@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -14,7 +17,7 @@ public class IntakeSub extends SubsystemBase{
   // ID - 7
   private final CANSparkMax motor;
   private final RelativeEncoder encoder;
-
+  private boolean isIntaking;
   // -1 = grab, 0 = idle, 1 = throw
   private double direction;
   // controls speed of motor
@@ -24,14 +27,15 @@ public class IntakeSub extends SubsystemBase{
       motor = new CANSparkMax(7, MotorType.kBrushless);
       encoder = motor.getEncoder();
       direction = 0;
+      isIntaking = false;
 
-      motor.setIdleMode(IdleMode.kBrake);
-      motor.setInverted(true);
-      // set original position which should represent original position
+      // zero position
       encoder.setPosition(0);
+      motor.setIdleMode(IdleMode.kBrake);
+      motor.setInverted(false);
 
       // control intake speed
-      motor.setSmartCurrentLimit(8, 100);
+      motor.setSmartCurrentLimit(20, 100);
     } else {
       motor = null;
       encoder = null;
@@ -39,7 +43,7 @@ public class IntakeSub extends SubsystemBase{
   }
 
   //Return the encoder
-  public RelativeEncoder getClawEncoder(){
+  public RelativeEncoder getEncoder(){
     return encoder;
   }
 
@@ -54,7 +58,23 @@ public class IntakeSub extends SubsystemBase{
   // -1, 0, or 1
   public void setDirection(double newDirection) {
     direction = Math.signum(newDirection);
-    motor.setVoltage(direction * K_IntakeSub.voltage);
+    if (direction == 0) {
+      if (isIntaking)
+        motor.setVoltage(-1.5);
+      else
+        motor.setVoltage(0);
+    }  
+    else {
+      if (direction > 0) {
+        isIntaking = false;
+        motor.setVoltage(direction * K_IntakeSub.OutVoltage);
+      }
+      else {
+        isIntaking = true;
+        motor.setVoltage(direction * K_IntakeSub.InVoltage);
+      }
+    }
+      
   }
 
   // returns current through motor
@@ -74,6 +94,7 @@ public class IntakeSub extends SubsystemBase{
   public void periodic() {
     if (K_IntakeSub.isUsingIntake) {
       // motor.setVoltage(direction * K_IntakeSub.voltage);
+      SmartDashboard.putBoolean("Is Intaking", isIntaking);
     }
   }
 }

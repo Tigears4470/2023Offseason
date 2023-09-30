@@ -31,7 +31,7 @@ public class PivotSubPID extends SubsystemBase{
   // Limits range of motion
   private double desiredAngle = 0;
   private double maxAngle = 100;
-  private double minAngle = 0;
+  private double minAngle = 3;
   
   public PivotSubPID(){
     if(K_PivotSub.isUsingPivot){
@@ -53,11 +53,11 @@ public class PivotSubPID extends SubsystemBase{
       kI = 0.0000005;
       kD = 0; 
       kIz = 0.005; 
-      kFF = 0.00028; 
-      kMaxOutput = 1; 
-      kMinOutput = -1;
+      kFF = 0.0003; 
+      kMaxOutput = 2; 
+      kMinOutput = -2;
       // Smart Motion Coefficients
-      double rps = 0.3;
+      double rps = 0.2;
       maxVel = rps*60*60; // rpm: .3rps -> 12 rpm -> (adjusted by gear ratio)
       maxAcc = 1440;
 
