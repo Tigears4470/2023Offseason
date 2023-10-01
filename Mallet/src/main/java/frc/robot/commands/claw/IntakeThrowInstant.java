@@ -3,11 +3,11 @@ package frc.robot.commands.claw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSub;
 
-public class IntakeGrabContinuous extends CommandBase{
+public class IntakeThrowInstant extends CommandBase{
     private IntakeSub myIntake;
 
     // Creation Function of the Class
-    public IntakeGrabContinuous(IntakeSub intake) {
+    public IntakeThrowInstant(IntakeSub intake) {
         myIntake = intake;
         addRequirements(intake);
     }
@@ -21,7 +21,7 @@ public class IntakeGrabContinuous extends CommandBase{
     // Relatively change claw by joystick
     @Override
     public void execute() {
-        myIntake.setDirection(-.2);
+        myIntake.setDirection(.2);
     }
 
     // Called once the command ends or is interrupted.
@@ -34,6 +34,6 @@ public class IntakeGrabContinuous extends CommandBase{
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
