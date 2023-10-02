@@ -2,11 +2,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.GyroScope;
 
-public class Setup extends CommandBase{
+public class SetupGyro extends CommandBase{
     private GyroScope m_gyro;
     private boolean status;
     
-    public Setup(GyroScope gyro){
+    public SetupGyro(GyroScope gyro){
         m_gyro = gyro;
         status = false;
     }
