@@ -21,7 +21,7 @@ public class AutoGroup_Place extends SequentialCommandGroup {
             new ResetEncoders(drivetrain),
             new AutoGroup_MiddleDrop(drivetrain, m_pivotMotor, m_extensionMotor, m_clawMotor),
             new MoveDistance(drivetrain, 1, false),
-            new TurnBy(drivetrain, gyro, 180),
+            new TurnBy(drivetrain, gyro, 180f),
             new MoveDistance(drivetrain, 0, false)
         );
     }

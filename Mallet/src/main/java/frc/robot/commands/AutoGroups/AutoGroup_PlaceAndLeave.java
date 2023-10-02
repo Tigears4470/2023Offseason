@@ -22,7 +22,7 @@ public class AutoGroup_PlaceAndLeave extends SequentialCommandGroup {
         //Adding Order of commands
         addCommands(
             new AutoGroup_MiddleDrop(drivetrain, m_pivot, m_extender, claw),
-            new TurnBy(m_drivetrain, m_gyro, 180),
+            new TurnBy(m_drivetrain, m_gyro, 180f),
             new MoveDistance(drivetrain, 15, false)
             /*move back into community and center with AprilTag*/
             /*place piece*/
