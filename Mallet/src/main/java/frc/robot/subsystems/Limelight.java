@@ -19,7 +19,6 @@ public class Limelight extends SubsystemBase {
 
   private NetworkTable table;
   private HashMap<String, Integer> pipelineMap;
-  private double curIndex;
 
   public Limelight() {
     // create pipeline map
@@ -46,7 +45,6 @@ public class Limelight extends SubsystemBase {
     
     //set pipeline to cone and cube
     pipelineIndex.setDouble(5);
-    curIndex = 5;
   }
 
   // get x angle offset in degrees
@@ -86,7 +84,10 @@ public class Limelight extends SubsystemBase {
  */
   public void setPipeline(double index) {
     pipelineIndex.setDouble(index);
-    curIndex = index;
+  }
+
+  public double getPipeline() {
+    return pipelineIndex.getDouble(0);
   }
 
   public void nextPipeline() {
