@@ -56,6 +56,6 @@ public final class Constants {
         public static final double coneMaxCurrent = .3;
         public static final double cubeMaxCurrent = .2;
         public static final double InVoltage = 4.5;
-        public static final double OutVoltage = 2;
+        public static final double OutVoltage = 1.7;
     }
 }

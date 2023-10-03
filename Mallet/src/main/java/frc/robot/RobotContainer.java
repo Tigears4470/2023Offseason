@@ -18,7 +18,8 @@ import frc.robot.commands.MoveDistance;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.AutoGroups.AutoGroup_Balance;
 import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
-import frc.robot.commands.AutoGroups.AutoGroup_Place;
+import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCube;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCone;
 import frc.robot.commands.claw.IntakeEmergencyStop;
 import frc.robot.commands.claw.IntakeGrab;
 import frc.robot.commands.claw.IntakeStop;
@@ -129,7 +130,8 @@ public class RobotContainer {
     m_autoChooser.addOption("Leave and Balance", new AutoGroup_LeaveCommAndBalance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Balance", new AutoGroup_Balance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Leave ", new MoveDistance(m_drivetrain, 5, false));
-    m_autoChooser.addOption("Auto Test", new AutoGroup_Place(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Test", new AutoGroup_PickAndPlaceCube(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     // m_autoChooser.addOption("Set Extender Distance", new ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
     main.add("Auto Routine", m_autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 

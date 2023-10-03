@@ -30,8 +30,8 @@ public class PivotSubPID extends SubsystemBase{
 
   // Limits range of motion
   private double desiredAngle = 0;
-  private double maxAngle = 100;
-  private double minAngle = 3;
+  private double maxAngle = 95;
+  private double minAngle = 2.5;
   
   public PivotSubPID(){
     if(K_PivotSub.isUsingPivot){

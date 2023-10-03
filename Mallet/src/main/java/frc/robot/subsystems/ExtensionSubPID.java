@@ -20,9 +20,9 @@ public class ExtensionSubPID extends SubsystemBase{
   private double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxVel, minVel, maxAcc, allowedErr;
   
   // Limits range of motion
-  private double desiredPosition = -10;
+  private double desiredPosition = -11;
   private double maxPosition = 0;
-  private double minPosition = -10;
+  private double minPosition = -11;
   
   public ExtensionSubPID(){
     if(K_PivotSub.isUsingPivot){
@@ -117,7 +117,7 @@ public class ExtensionSubPID extends SubsystemBase{
   // sets the desired position
   // 0 - 10 inches
   public void setPosition (double position) {
-    position -= 10; // account for -10 to 0 range
+    position -= 11; // account for -10 to 0 range
     if(K_PivotSub.isUsingPivot){
       if (position < minPosition)
         position = minPosition;

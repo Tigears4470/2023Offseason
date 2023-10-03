@@ -55,7 +55,7 @@ public class Drivetrain extends SubsystemBase {
 
   // negative is forward or to the right
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    m_diffDrive.arcadeDrive(xaxisSpeed, .5*zaxisRotate);
+    m_diffDrive.arcadeDrive(.8*xaxisSpeed, .5*zaxisRotate);
   }
 
   public void resetEncoders() {
