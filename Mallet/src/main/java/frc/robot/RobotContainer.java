@@ -69,10 +69,6 @@ public class RobotContainer {
   // CLAW INFO
   // private GenericEntry entry_ClawEncoder = main.add("Claw Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
   // PIVOT INFO
-  private GenericEntry entry_PivotEncoder = main.add("Pivot Encoder", 0).withWidget(BuiltInWidgets.kTextView)
-      .getEntry();
-  private GenericEntry entry_PivotMaxAngle = main.add("Pivot Max Angle", 0).withWidget(BuiltInWidgets.kTextView)
-      .getEntry();
   // EXTENSION INFO
   private GenericEntry entry_ExtEncoder = main.add("Ext Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
   // LIMELIGHT INFO
@@ -102,9 +98,6 @@ public class RobotContainer {
     // CLAW
     // entry_ClawEncoder.setDouble(m_clawMotor.getClawEncoder().getPosition());
 
-    // //PIVOT
-    entry_PivotEncoder.setDouble(m_pivotMotor.getEncoder().getPosition());
-    entry_PivotMaxAngle.setDouble(m_pivotMotor.getMaxAngle());
 
     // //EXTENSION INFO
     // entry_ExtEncoder.setDouble(m_extensionMotor.getEncoder().getPosition());

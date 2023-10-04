@@ -4,8 +4,12 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.SparkMaxPIDController;
+
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.K_ExtSub;
 import frc.robot.Constants.K_PivotSub;
@@ -33,6 +37,31 @@ public class PivotSubPID extends SubsystemBase{
   private double maxAngle = 95;
   private double minAngle = 2.5;
   
+  // === Shuffleboard ===
+  // Dev Tab
+  private final ShuffleboardTab devTab = Shuffleboard.getTab("PivotDevTab");
+  //    display PID coefficients on SmartDashboard
+  private GenericEntry entryPivotPGain;
+  private GenericEntry entryPivotIGain;
+  private GenericEntry entryPivotDGain;
+  private GenericEntry entryPivotIZone;
+  private GenericEntry entryPivotFeedForward;
+  private GenericEntry entryPivotMaxOutput;
+  private GenericEntry entryPivotMinOutput;
+  //    display Smart Motion coefficients
+  private GenericEntry entryPivotMaxVelocity;
+  private GenericEntry entryPivotMinVelocity;
+  private GenericEntry entryPivotMaxAcceleration;
+  private GenericEntry entryPivotAllowedClosedLoopError;
+
+  // Driver's Tab
+  private final ShuffleboardTab mainTab = Shuffleboard.getTab("Driver's Tab");
+  private GenericEntry entryPivotBottomLimit;
+  private GenericEntry entryPivotTopLimit;
+  private GenericEntry entryPivotEncoder;
+  private GenericEntry entryPivotDesiredAngle;
+
+
   public PivotSubPID(){
     if(K_PivotSub.isUsingPivot){
       motor = new CANSparkMax(5, MotorType.kBrushless);
@@ -42,8 +71,6 @@ public class PivotSubPID extends SubsystemBase{
 
       // set conversion factor so getPosition returns degrees
       encoder.setPositionConversionFactor(360.0/K_PivotSub.gearRatio);
-      // set conversion ratio to 1 ONLY FOR CALIBRATING FOR ANGLE
-      // encoder1.setPositionConversionFactor(1);
 
       encoder.setPosition(0);
       desiredAngle = encoder.getPosition();
@@ -85,31 +112,9 @@ public class PivotSubPID extends SubsystemBase{
       pid.setSmartMotionMaxVelocity(maxVel, smartMotionSlot);
       pid.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
       pid.setSmartMotionMaxAccel(maxAcc, smartMotionSlot);
-      pid.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
+      pid.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot); 
 
-      if (K_PivotSub.devMode) {
-        // display PID coefficients on SmartDashboard
-        SmartDashboard.putNumber("Pivot P Gain", kP);
-        SmartDashboard.putNumber("Pivot I Gain", kI);
-        SmartDashboard.putNumber("Pivot D Gain", kD);
-        SmartDashboard.putNumber("Pivot I Zone", kIz);
-        SmartDashboard.putNumber("Pivot Feed Forward", kFF);
-        SmartDashboard.putNumber("Pivot Max Output", kMaxOutput);
-        SmartDashboard.putNumber("Pivot Min Output", kMinOutput);
-
-        // display Smart Motion coefficients
-        SmartDashboard.putNumber("Pivot Max Velocity", maxVel);
-        SmartDashboard.putNumber("Pivot Min Velocity", minVel);
-        SmartDashboard.putNumber("Pivot Max Acceleration", maxAcc);
-        SmartDashboard.putNumber("Pivot Allowed Closed Loop Error", allowedErr);
-        SmartDashboard.putNumber("Pivot Set Position", 0);
-      }
-      
-
-      // button to toggle between velocity and smart motion modes
-    
-      SmartDashboard.putBoolean("Mode", true);
-
+      initShuffleboard();
     }
   }
 
@@ -182,47 +187,81 @@ public class PivotSubPID extends SubsystemBase{
     }
   }
 
-  @Override
-  public void periodic() {
-    SmartDashboard.putBoolean("Bottom Limit", BtmLimit.get());
-    SmartDashboard.putNumber("Pivot Pivot Encoder", encoder.getPosition());
-    SmartDashboard.putBoolean("Top Limit", TopLimit.get());
-    SmartDashboard.putNumber("Pivot Desired Angle", desiredAngle);
-    if (K_PivotSub.devMode) {
-      double p = SmartDashboard.getNumber("Pivot P Gain", 0);
-    double i = SmartDashboard.getNumber("Pivot I Gain", 0);
-    double d = SmartDashboard.getNumber("Pivot D Gain", 0);
-    double iz = SmartDashboard.getNumber("Pivot I Zone", 0);
-    double ff = SmartDashboard.getNumber("Pivot Feed Forward", 0);
-    double max = SmartDashboard.getNumber("Pivot Max Output", 0);
-    double min = SmartDashboard.getNumber("Pivot Min Output", 0);
-    double maxV = SmartDashboard.getNumber("Pivot Max Velocity", 0);
-    double minV = SmartDashboard.getNumber("Pivot Min Velocity", 0);
-    double maxA = SmartDashboard.getNumber("Pivot Max Acceleration", 0);
-    double allE = SmartDashboard.getNumber("Pivot Allowed Closed Loop Error", 0);
+  public void initShuffleboard() {
+    // Driver's Tab
+    entryPivotBottomLimit = mainTab.add("Pivot Bottom Limit", BtmLimit.get()).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+    entryPivotTopLimit = mainTab.add("Pivot Top Limit", TopLimit.get()).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+    entryPivotEncoder = mainTab.add("Pivot Encoder", encoder.getPosition()).withWidget(BuiltInWidgets.kTextView).getEntry();
+    entryPivotDesiredAngle = mainTab.add("Pivot Desired Angle", desiredAngle).withWidget(BuiltInWidgets.kTextView).getEntry();
 
-    // if PID coefficients on SmartDashboard have changed, write new values to controller
-    if((p != kP)) { pid.setP(p); kP = p; }
-    if((i != kI)) { pid.setI(i); kI = i; }
-    if((d != kD)) { pid.setD(d); kD = d; }
-    if((iz != kIz)) { pid.setIZone(iz); kIz = iz; }
-    if((ff != kFF)) { pid.setFF(ff); kFF = ff; }
-    if((max != kMaxOutput) || (min != kMinOutput)) { 
-      pid.setOutputRange(min, max); 
-      kMinOutput = min; kMaxOutput = max; 
+    // Pivot Dev Tab
+    if (K_PivotSub.devMode) {
+      // display PID coefficients on SmartDashboard
+      entryPivotPGain = devTab.add("Pivot P Gain", kP).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotIGain = devTab.add("Pivot I Gain", kI).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotDGain = devTab.add("Pivot D Gain", kD).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotIZone = devTab.add("Pivot I Zone", kIz).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotFeedForward = devTab.add("Pivot Feed Forward", kFF).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotMaxOutput = devTab.add("Pivot Max Output", kMaxOutput).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotMinOutput = devTab.add("Pivot Min Output", kMinOutput).withWidget(BuiltInWidgets.kTextView).getEntry();
+
+      // display Smart Motion coefficients        // display Smart Motion coefficients
+      entryPivotMaxVelocity = devTab.add("Pivot Max Velocity", maxVel).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotMinVelocity = devTab.add("Pivot Min Velocity", minVel).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotMaxAcceleration = devTab.add("Pivot Max Acceleration", maxAcc).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryPivotAllowedClosedLoopError = devTab.add("Pivot Allowed Closed Loop Error", allowedErr).withWidget(BuiltInWidgets.kTextView).getEntry();
+      devTab.add("Pivot Set Position", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
+
+      devTab.add("Mode", true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
     }
-    if((maxV != maxVel)) { pid.setSmartMotionMaxVelocity(maxV,0); maxVel = maxV; }
-    if((minV != minVel)) { pid.setSmartMotionMinOutputVelocity(minV,0); minVel = minV; }
-    if((maxA != maxAcc)) { pid.setSmartMotionMaxAccel(maxA,0); maxAcc = maxA; }
-    if((allE != allowedErr)) { pid.setSmartMotionAllowedClosedLoopError(allE,0); allowedErr = allE; }
-    // desiredAngle = SmartDashboard.getNumber("Pivot Set Position", 0);
+  }
+
+  public void updateShuffleboard() {
+    // Driver's Tab
+    entryPivotBottomLimit.setBoolean(BtmLimit.get());
+    entryPivotTopLimit.setBoolean(TopLimit.get());
+    entryPivotEncoder.setDouble(encoder.getPosition());
+    entryPivotDesiredAngle.setDouble(desiredAngle);
+
+    // Pivot Dev Tab 
+    if (K_PivotSub.devMode) {
+      double p = entryPivotPGain.getDouble(0);
+      double i = entryPivotIGain.getDouble(0);
+      double d = entryPivotDGain.getDouble(0);
+      double iz = entryPivotIZone.getDouble(0);
+      double ff = entryPivotFeedForward.getDouble(0);
+      double max = entryPivotMaxOutput.getDouble(0);
+      double min = entryPivotMinOutput.getDouble(0);
+      double maxV = entryPivotMaxVelocity.getDouble(0);
+      double minV = entryPivotMinVelocity.getDouble(0);
+      double maxA = entryPivotMaxAcceleration.getDouble(0);
+      double allE = entryPivotAllowedClosedLoopError.getDouble(0);
+
+      // if PID coefficients on SmartDashboard have changed, write new values to controller
+      if((p != kP)) { pid.setP(p); kP = p; }
+      if((i != kI)) { pid.setI(i); kI = i; }
+      if((d != kD)) { pid.setD(d); kD = d; }
+      if((iz != kIz)) { pid.setIZone(iz); kIz = iz; }
+      if((ff != kFF)) { pid.setFF(ff); kFF = ff; }
+      if((max != kMaxOutput) || (min != kMinOutput)) { 
+        pid.setOutputRange(min, max); 
+        kMinOutput = min; kMaxOutput = max; 
+      }
+      if((maxV != maxVel)) { pid.setSmartMotionMaxVelocity(maxV,0); maxVel = maxV; }
+      if((minV != minVel)) { pid.setSmartMotionMinOutputVelocity(minV,0); minVel = minV; }
+      if((maxA != maxAcc)) { pid.setSmartMotionMaxAccel(maxA,0); maxAcc = maxA; }
+      if((allE != allowedErr)) { pid.setSmartMotionAllowedClosedLoopError(allE,0); allowedErr = allE; }
       /**
        * As with other PID modes, Smart Motion is set by calling the
        * setReference method on an existing pid object and setting
        * the control type to kSmartMotion
        */
-      pid.setReference(desiredAngle, CANSparkMax.ControlType.kSmartMotion);
     }
-    
+  }
+
+  @Override
+  public void periodic() {
+    updateShuffleboard();
+    pid.setReference(desiredAngle, CANSparkMax.ControlType.kSmartMotion);
   }
 }
