@@ -4,7 +4,11 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.K_ExtSub;
 import frc.robot.Constants.K_PivotSub;
@@ -23,6 +27,28 @@ public class ExtensionSubPID extends SubsystemBase{
   private double desiredPosition = -11;
   private double maxPosition = 0;
   private double minPosition = -11;
+
+  // === Shuffleboard ===
+  // Dev Tab
+  private final ShuffleboardTab devTab = Shuffleboard.getTab("ExtDevTab");
+  //    display PID coefficients on SmartDashboard
+  private GenericEntry entryExtPGain;
+  private GenericEntry entryExtIGain;
+  private GenericEntry entryExtDGain;
+  private GenericEntry entryExtIZone;
+  private GenericEntry entryExtFeedForward;
+  private GenericEntry entryExtMaxOutput;
+  private GenericEntry entryExtMinOutput;
+  //    display Smart Motion coefficients
+  private GenericEntry entryExtMaxVelocity;
+  private GenericEntry entryExtMinVelocity;
+  private GenericEntry entryExtMaxAcceleration;
+  private GenericEntry entryExtAllowedClosedLoopError;
+
+  // Driver's Tab
+  private final ShuffleboardTab mainTab = Shuffleboard.getTab("Driver's Tab");
+  private GenericEntry entryExtEncoder;
+  private GenericEntry entryExtDesiredPosition;
   
   public ExtensionSubPID(){
     if(K_PivotSub.isUsingPivot){
@@ -80,27 +106,7 @@ public class ExtensionSubPID extends SubsystemBase{
       pid.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
       pid.setSmartMotionMaxAccel(maxAcc, smartMotionSlot);
       pid.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
-
-      if (K_ExtSub.devMode) {
-        // display PID coefficients on SmartDashboard
-        SmartDashboard.putNumber("Extension P Gain", kP);
-        SmartDashboard.putNumber("Extension I Gain", kI);
-        SmartDashboard.putNumber("Extension D Gain", kD);
-        SmartDashboard.putNumber("Extension I Zone", kIz);
-        SmartDashboard.putNumber("Extension Feed Forward", kFF);
-        SmartDashboard.putNumber("Extension Max Output", kMaxOutput);
-        SmartDashboard.putNumber("Extension Min Output", kMinOutput);
-
-        // display Smart Motion coefficients
-        SmartDashboard.putNumber("Extension Max Velocity", maxVel);
-        SmartDashboard.putNumber("Extension Min Velocity", minVel);
-        SmartDashboard.putNumber("Extension Max Acceleration", maxAcc);
-        SmartDashboard.putNumber("Extension Allowed Closed Loop Error", allowedErr);
-
-        // button to toggle between velocity and smart motion modes
-
-        SmartDashboard.putBoolean("Extension Mode", true);
-      }
+      initShuffleboard();
     }
   }
 
@@ -117,7 +123,7 @@ public class ExtensionSubPID extends SubsystemBase{
   // sets the desired position
   // 0 - 10 inches
   public void setPosition (double position) {
-    position -= 11; // account for -10 to 0 range
+    position -= 11; // account for -11 to 0 range
     if(K_PivotSub.isUsingPivot){
       if (position < minPosition)
         position = minPosition;
@@ -169,21 +175,51 @@ public class ExtensionSubPID extends SubsystemBase{
     }
   }
 
-  @Override
-  public void periodic() {
+  public void initShuffleboard() {
+    // Driver's Tab
+    entryExtEncoder = mainTab.add("Ext Encoder", encoder.getPosition()).withWidget(BuiltInWidgets.kTextView).getEntry();
+    entryExtDesiredPosition = mainTab.add("Ext Desired Angle", desiredPosition).withWidget(BuiltInWidgets.kTextView).getEntry();
+
+    // Ext Dev Tab
     if (K_ExtSub.devMode) {
-      double p = SmartDashboard.getNumber("Extension P Gain", 0);
-      double i = SmartDashboard.getNumber("Extension I Gain", 0);
-      double d = SmartDashboard.getNumber("Extension D Gain", 0);
-      double iz = SmartDashboard.getNumber("Extension I Zone", 0);
-      double ff = SmartDashboard.getNumber("Extension Feed Forward", 0);
-      double max = SmartDashboard.getNumber("Extension Max Output", 0);
-      double min = SmartDashboard.getNumber("Extension Min Output", 0);
-      double maxV = SmartDashboard.getNumber("Extension Max Velocity", 0);
-      double minV = SmartDashboard.getNumber("Extension Min Velocity", 0);
-      double maxA = SmartDashboard.getNumber("Extension Max Acceleration", 0);
-      double allE = SmartDashboard.getNumber("Extension Allowed Closed Loop Error", 0);
-  
+      // display PID coefficients on SmartDashboard
+      entryExtPGain = devTab.add("Ext P Gain", kP).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtIGain = devTab.add("Ext I Gain", kI).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtDGain = devTab.add("Ext D Gain", kD).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtIZone = devTab.add("Ext I Zone", kIz).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtFeedForward = devTab.add("Ext Feed Forward", kFF).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtMaxOutput = devTab.add("Ext Max Output", kMaxOutput).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtMinOutput = devTab.add("Ext Min Output", kMinOutput).withWidget(BuiltInWidgets.kTextView).getEntry();
+
+      // display Smart Motion coefficients        // display Smart Motion coefficients
+      entryExtMaxVelocity = devTab.add("Ext Max Velocity", maxVel).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtMinVelocity = devTab.add("Ext Min Velocity", minVel).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtMaxAcceleration = devTab.add("Ext Max Acceleration", maxAcc).withWidget(BuiltInWidgets.kTextView).getEntry();
+      entryExtAllowedClosedLoopError = devTab.add("Ext Allowed Closed Loop Error", allowedErr).withWidget(BuiltInWidgets.kTextView).getEntry();
+      devTab.add("Ext Set Position", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
+      devTab.add("Ext Mode", true).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+    }
+  }
+
+  public void updateShuffleboard() {
+    // Driver's Tab
+    entryExtEncoder.setDouble(encoder.getPosition());
+    entryExtDesiredPosition.setDouble(desiredPosition);
+
+    // Ext Dev Tab 
+    if (K_ExtSub.devMode) {
+      double p = entryExtPGain.getDouble(0);
+      double i = entryExtIGain.getDouble(0);
+      double d = entryExtDGain.getDouble(0);
+      double iz = entryExtIZone.getDouble(0);
+      double ff = entryExtFeedForward.getDouble(0);
+      double max = entryExtMaxOutput.getDouble(0);
+      double min = entryExtMinOutput.getDouble(0);
+      double maxV = entryExtMaxVelocity.getDouble(0);
+      double minV = entryExtMinVelocity.getDouble(0);
+      double maxA = entryExtMaxAcceleration.getDouble(0);
+      double allE = entryExtAllowedClosedLoopError.getDouble(0);
+
       // if PID coefficients on SmartDashboard have changed, write new values to controller
       if((p != kP)) { pid.setP(p); kP = p; }
       if((i != kI)) { pid.setI(i); kI = i; }
@@ -198,15 +234,16 @@ public class ExtensionSubPID extends SubsystemBase{
       if((minV != minVel)) { pid.setSmartMotionMinOutputVelocity(minV,0); minVel = minV; }
       if((maxA != maxAcc)) { pid.setSmartMotionMaxAccel(maxA,0); maxAcc = maxA; }
       if((allE != allowedErr)) { pid.setSmartMotionAllowedClosedLoopError(allE,0); allowedErr = allE; }
-      // desiredAngle = SmartDashboard.getNumber("Set Position", 0);
-        /**
-         * As with other PID modes, Smart Motion is set by calling the
-         * setReference method on an existing pid object and setting
-         * the control type to kSmartMotion
-         */
-        pid.setReference(desiredPosition, CANSparkMax.ControlType.kSmartMotion);
+      /**
+       * As with other PID modes, Smart Motion is set by calling the
+       * setReference method on an existing pid object and setting
+       * the control type to kSmartMotion
+       */
     }
-    SmartDashboard.putNumber("Extension Encoder", encoder.getPosition());
-    SmartDashboard.putNumber("Extension Desired Angle", desiredPosition);
+  }
+
+  @Override
+  public void periodic() {
+    updateShuffleboard();
   }
 }

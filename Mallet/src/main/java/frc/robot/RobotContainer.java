@@ -68,9 +68,6 @@ public class RobotContainer {
   private GenericEntry entry_GyroZ = main.add("Yaw (Side to Side)", 0).withWidget(BuiltInWidgets.kGyro).getEntry();
   // CLAW INFO
   // private GenericEntry entry_ClawEncoder = main.add("Claw Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
-  // PIVOT INFO
-  // EXTENSION INFO
-  private GenericEntry entry_ExtEncoder = main.add("Ext Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
   // LIMELIGHT INFO
   private GenericEntry entry_LimelightXOffset = main.add("LimelightXOffset", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
@@ -97,10 +94,6 @@ public class RobotContainer {
 
     // CLAW
     // entry_ClawEncoder.setDouble(m_clawMotor.getClawEncoder().getPosition());
-
-
-    // //EXTENSION INFO
-    // entry_ExtEncoder.setDouble(m_extensionMotor.getEncoder().getPosition());
 
     // //LIMELIGHT INFO
     entry_LimelightXOffset.setDouble(m_limelight.getXOffset());
