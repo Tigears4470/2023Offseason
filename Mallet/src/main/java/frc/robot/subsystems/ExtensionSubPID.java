@@ -6,8 +6,10 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.K_ExtSub;
@@ -30,8 +32,7 @@ public class ExtensionSubPID extends SubsystemBase{
 
   // === Shuffleboard ===
   // Dev Tab
-  private final ShuffleboardTab devTab = Shuffleboard.getTab("ExtDevTab");
-  //    display PID coefficients on SmartDashboard
+  private final ShuffleboardLayout devTab = Shuffleboard.getTab("DevTab").getLayout("Extension", BuiltInLayouts.kList);  //    display PID coefficients on SmartDashboard
   private GenericEntry entryExtPGain;
   private GenericEntry entryExtIGain;
   private GenericEntry entryExtDGain;

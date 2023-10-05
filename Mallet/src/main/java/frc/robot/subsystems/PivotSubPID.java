@@ -7,8 +7,10 @@ import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.K_ExtSub;
@@ -39,7 +41,7 @@ public class PivotSubPID extends SubsystemBase{
   
   // === Shuffleboard ===
   // Dev Tab
-  private final ShuffleboardTab devTab = Shuffleboard.getTab("PivotDevTab");
+  private final ShuffleboardLayout devTab = Shuffleboard.getTab("DevTab").getLayout("Pivot", BuiltInLayouts.kList);
   //    display PID coefficients on SmartDashboard
   private GenericEntry entryPivotPGain;
   private GenericEntry entryPivotIGain;
