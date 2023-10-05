@@ -11,7 +11,6 @@ public class MoveDistance extends CommandBase{
     private boolean m_isBackwards;
     
     public MoveDistance(Drivetrain drivetrain, double newFeet, boolean backwards){
-        System.out.println("constructor");
         m_isBackwards = backwards;
         m_Drivetrain  = drivetrain;
         m_Drivetrain.resetEncoders();

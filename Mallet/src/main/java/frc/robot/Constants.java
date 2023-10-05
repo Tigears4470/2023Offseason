@@ -3,19 +3,25 @@ package frc.robot;
 public final class Constants {
     public static final double K_SPEED = 0.5; //speed for turning
     public static final double K_WHEEL_DIAMETER_INCH = 6; //diameter of the wheels in inches
-    public static final double K_TICKS_PER_FEET = 40.964489;
-
+    public static final double K_NEO_TICKS = 42;
+    public static final double K_PI = 3.14;
+    public static final double K_WHEEL_PERIMETER_INCH = K_WHEEL_DIAMETER_INCH * K_PI;
+    public static final double K_WHEEL_PERIMETER_FEET = K_WHEEL_DIAMETER_INCH * K_PI / 12.0;
+    public static final double K_TICKS_PER_INCH = K_NEO_TICKS / K_WHEEL_PERIMETER_INCH;
+    public static final double K_TICKS_PER_FEET = K_NEO_TICKS / K_WHEEL_PERIMETER_FEET;
+    // public static final double K_TICKS_PER_FEET = 40.964489;
     /*----------
         AUTO
     -----------*/
     public static final double K_FORWARDS_FEET = 9* K_TICKS_PER_FEET; //17.666666
     public static final double K_BACKWARDS_FEET = 6 * K_TICKS_PER_FEET; //6.572500
     public static final float K_TURN_ERROR_RANGE = 2f;
+    public static final double K_MOVE_DISTANCE_ERROR_RANGE = .5;
     public static final double K_DEC_TO_PI = 0.01745;
 
     //Turn By
-    public static final double K_MIN_TURNING_SPEED = 0.2; //minimum speed to turn at
-    public static final double K_MAX_TURNING_SPEED = 0.5; //maximum speed to turn at
+    public static final float K_MIN_TURNING_SPEED = 0.2f; //minimum speed to turn at
+    public static final float K_MAX_TURNING_SPEED = 0.5f; //maximum speed to turn at
 
     //Balancing
     public static final double K_PLAT_DEGREE_THRESH = 10; //angle at which the robot is considered to be on the platform

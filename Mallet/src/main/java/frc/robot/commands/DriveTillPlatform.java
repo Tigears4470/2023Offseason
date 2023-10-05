@@ -20,7 +20,6 @@ public class DriveTillPlatform extends CommandBase {
   public DriveTillPlatform(Drivetrain drivetrain, GyroScope t_gyro) {
     m_gyro = t_gyro;
     m_drivetrain = drivetrain;
-    addRequirements(t_gyro);
     addRequirements(drivetrain);
   }
 

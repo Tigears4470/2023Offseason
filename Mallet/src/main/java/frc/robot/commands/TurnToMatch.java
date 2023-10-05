@@ -7,46 +7,47 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TurnToMatch extends CommandBase {
     private Drivetrain m_drivetrain;
     private GyroScope m_gyro;
-    private double turnDestination; //angle we're turning by
-    private double finalAngle; //the final angle the robot should end at
-    private double turnDirection;
+    private float finalAngle; //the final angle the robot should end at
+    private float turnDirection;
 
-    public TurnToMatch (Drivetrain p_drivetrain, GyroScope p_gyro, double angle){
+    public TurnToMatch (Drivetrain p_drivetrain, GyroScope p_gyro, float angle){
         m_drivetrain = p_drivetrain;
         m_gyro = p_gyro;
-        turnDestination = angle;
+        finalAngle = angle;
         addRequirements(m_drivetrain);
-        addRequirements(m_gyro);
     }
 
     public float getGyroZ360(){ //return the gyro position in the range 0 to 359
         float angle = m_gyro.getAngleZ();
-        if(angle<0) angle += 360;
+        if(angle<0) angle += 360.0f;
         return angle;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        finalAngle = turnDestination; //determine final angle based on current position and the angle to turn by
-        finalAngle = (finalAngle+360)%360; // Properly converts final angle to a positive number (ex: 45 degrees and goes counter-clockwise by 90 degrees would be 270 or -90)
-
-        turnDirection = Math.signum(getGyroZ360()-turnDestination);
+        turnDirection = Math.signum(finalAngle-getGyroZ360());
+        //Goes opposite direction if angle distance is greater than 180
+        if(Math.abs(finalAngle - getGyroZ360()) > 180.0f){
+            turnDirection *= -1.0f;
+        }
     }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double distance = Math.abs(finalAngle - getGyroZ360()); //find distance from the target angle
-        if(distance > 180) distance = Math.abs(distance-360); //wrap around distance
-        double speed = 2*Math.max(Constants.K_MIN_TURNING_SPEED,Math.min(Constants.K_MAX_TURNING_SPEED, (.01*(distance-10)+.2))); //set speed dynamically to slow down as we approach the target angle
+        float distance = Math.abs(finalAngle - getGyroZ360()); //find distance from the target angle
+        if(distance > 180) distance = Math.abs(distance-360.0f); //wrap around distance
+        float speed = 2.0f*Math.max(Constants.K_MIN_TURNING_SPEED,Math.min(Constants.K_MAX_TURNING_SPEED, (.01f*(distance-10.0f)+.2f))); //set speed dynamically to slow down as we approach the target angle
 
         m_drivetrain.arcadeDrive(0, speed*turnDirection);
     }
   
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        m_drivetrain.arcadeDrive(0, 0);
+    }
   
     // Returns true when the command should end.
     @Override
