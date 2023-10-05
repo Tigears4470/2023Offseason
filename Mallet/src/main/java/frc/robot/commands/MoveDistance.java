@@ -7,45 +7,51 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MoveDistance extends CommandBase{
     private Drivetrain m_Drivetrain;
     private double endDistance;
-    private double m_newFeet;
-    private boolean m_isBackwards;
-    
-    public MoveDistance(Drivetrain drivetrain, double newFeet, boolean backwards){
-        m_isBackwards = backwards;
+    private double distance;
+    private boolean isBackwards;
+    /**
+     * @param drivetrain the drivetrain to be used
+     * @param distance the desired distance to traveled in inches
+     * @param isBackwards the direction to head
+     */
+    public MoveDistance(Drivetrain drivetrain, double distance, boolean isBackwards){
+        this.isBackwards = isBackwards;
         m_Drivetrain  = drivetrain;
+        this.distance = distance;
         m_Drivetrain.resetEncoders();
-        m_newFeet = newFeet * Constants.K_TICKS_PER_FEET;
-        if(!m_isBackwards)
-            endDistance = m_Drivetrain.getAverageDistanceInch() + newFeet;
+        if(!isBackwards)
+            endDistance = m_Drivetrain.getAverageDistanceInch() + this.distance;
         else    
-            endDistance = m_Drivetrain.getAverageDistanceInch() - newFeet;
+            endDistance = m_Drivetrain.getAverageDistanceInch() - this.distance;
         addRequirements(drivetrain);
     }
     
     public void initialize() {
-        System.out.println("initialize");
         m_Drivetrain.resetEncoders();
-        if(!m_isBackwards)
-            endDistance = m_Drivetrain.getAverageDistanceInch() + m_newFeet;
+        if(!isBackwards)
+            endDistance = m_Drivetrain.getAverageDistanceInch() + distance;
         else 
-            endDistance = m_Drivetrain.getAverageDistanceInch() - m_newFeet;
+            endDistance = m_Drivetrain.getAverageDistanceInch() - distance;
     }
 
     public void execute() {
-        if(!m_isBackwards)
-            m_Drivetrain.arcadeDrive(.4, 0);
+        //Moves the drivetrain backwards of forwards
+        if(isBackwards)
+            m_Drivetrain.arcadeDrive(-.4, 0);
         else   
-            m_Drivetrain.arcadeDrive(-0.4, 0);
+            m_Drivetrain.arcadeDrive(0.4, 0);
     }
     
     public void end(boolean interrupted){
+        //Stops drivetrain
         m_Drivetrain.arcadeDrive(0.0, 0.0);
     }
     public boolean isFinished(){
-        //return Math.abs(m_Drivetrain.getAverageDistanceInch() - endDistance) < 1;
-        if(!m_isBackwards)
-            return endDistance < m_Drivetrain.getAverageDistanceInch();
+        //Determines the status of this function with range of error
+        //Does not use abs because is endDistane is -1 and we're at 0, could cause a false true 
+        if(isBackwards)
+            return -1 * endDistance > m_Drivetrain.getAverageDistanceInch() - Constants.K_MOVE_DISTANCE_ERROR_RANGE;
         else
-            return endDistance > m_Drivetrain.getAverageDistanceInch();
+            return endDistance < m_Drivetrain.getAverageDistanceInch() + Constants.K_MOVE_DISTANCE_ERROR_RANGE;
     }
 }
