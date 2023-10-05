@@ -50,8 +50,8 @@ public class MoveDistance extends CommandBase{
         //Determines the status of this function with range of error
         //Does not use abs because is endDistane is -1 and we're at 0, could cause a false true 
         if(isBackwards)
-            return -1 * endDistance > m_Drivetrain.getAverageDistanceInch() - Constants.K_MOVE_DISTANCE_ERROR_RANGE;
+            return endDistance > m_Drivetrain.getAverageDistanceInch();
         else
-            return endDistance < m_Drivetrain.getAverageDistanceInch() + Constants.K_MOVE_DISTANCE_ERROR_RANGE;
+            return endDistance < m_Drivetrain.getAverageDistanceInch();
     }
 }
