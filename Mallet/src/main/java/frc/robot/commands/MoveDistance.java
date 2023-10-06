@@ -15,15 +15,10 @@ public class MoveDistance extends CommandBase{
      * @param isBackwards the direction to head
      */
     public MoveDistance(Drivetrain drivetrain, double distance, boolean isBackwards){
+        addRequirements(drivetrain);
         this.isBackwards = isBackwards;
         m_Drivetrain  = drivetrain;
         this.distance = distance;
-        m_Drivetrain.resetEncoders();
-        if(!isBackwards)
-            endDistance = m_Drivetrain.getAverageDistanceInch() + this.distance;
-        else    
-            endDistance = m_Drivetrain.getAverageDistanceInch() - this.distance;
-        addRequirements(drivetrain);
     }
     
     public void initialize() {
@@ -45,13 +40,14 @@ public class MoveDistance extends CommandBase{
     public void end(boolean interrupted){
         //Stops drivetrain
         m_Drivetrain.arcadeDrive(0.0, 0.0);
+        m_Drivetrain.resetEncoders();
     }
     public boolean isFinished(){
         //Determines the status of this function with range of error
         //Does not use abs because is endDistane is -1 and we're at 0, could cause a false true 
         if(isBackwards)
-            return endDistance > m_Drivetrain.getAverageDistanceInch();
+            return m_Drivetrain.getAverageDistanceInch() < endDistance;
         else
-            return endDistance < m_Drivetrain.getAverageDistanceInch();
+            return m_Drivetrain.getAverageDistanceInch() > endDistance;
     }
 }

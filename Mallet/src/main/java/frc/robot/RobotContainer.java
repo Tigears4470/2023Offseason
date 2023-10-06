@@ -133,7 +133,7 @@ public class RobotContainer {
     m_autoChooser.addOption("Leave ", new MoveDistance(m_drivetrain, 24, false));
     m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("Auto Cube Test", new AutoGroup_PickAndPlaceCube(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    // m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain, m_gyro));
+    m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain));
     // m_autoChooser.addOption("Set Extender Distance", new ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
     main.add("Auto Routine", m_autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 
