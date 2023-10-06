@@ -49,11 +49,11 @@ public class PivotSubPID extends SubsystemBase{
       desiredAngle = encoder.getPosition();
 
       // PID coefficients
-      kP = 0.0001515; 
+      kP = 0.0002015; 
       kI = 0.0000005;
       kD = 0; 
       kIz = 0.005; 
-      kFF = 0.0003; 
+      kFF = 0.00035; 
       kMaxOutput = 2; 
       kMinOutput = -2;
       // Smart Motion Coefficients

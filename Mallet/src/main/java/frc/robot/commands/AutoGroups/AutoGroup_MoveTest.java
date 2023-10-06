@@ -10,13 +10,15 @@ public class AutoGroup_MoveTest extends SequentialCommandGroup {
     //Variables
     private Drivetrain m_Drivetrain;
     public AutoGroup_MoveTest(Drivetrain drivetrain, GyroScope gyro){
+        addRequirements(m_Drivetrain, gyro);
         System.out.println("AutoGroup_MoveTest");
         //Adding a drivetrain
         m_Drivetrain = drivetrain;
         //Adding Order of commands
         addCommands(
             new ResetEncoders(this.m_Drivetrain),
-            new MoveDistance(this.m_Drivetrain, 5, false)
+            new MoveDistance(this.m_Drivetrain, 24, false),
+            new MoveDistance(this.m_Drivetrain, 24, true)
             //new MoveDistanceV2(this.m_Drivetrain, 2, false)
         );
     }

@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
@@ -79,8 +80,8 @@ public class Drivetrain extends SubsystemBase {
 
   public void balance() {
     double speed = (balancePosition - getAverageDistanceInch())/4;
-    if (Math.abs(speed) > .45) {
-      speed = speed > 0 ? .45 : -.45;
+    if (Math.abs(speed) > .5) { // old for all was .45
+      speed = speed > 0 ? .5 : -.5;
     }
     arcadeDrive(speed, 0);
   }
@@ -164,5 +165,12 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Drivetrain Distance FR", m_rightEncoder.getPosition());
+    SmartDashboard.putNumber("Drivetrain Distance FL", m_leftEncoder.getPosition());
+    SmartDashboard.putNumber("Drivetrain Distance BR", m_rightBackEncoder.getPosition());
+    SmartDashboard.putNumber("Drivetrain Distance BL", m_rightBackEncoder.getPosition());
+    SmartDashboard.putNumber("AVG", getAverageDistanceInch());
+
+
   }
 }

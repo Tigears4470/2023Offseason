@@ -18,6 +18,7 @@ import frc.robot.commands.MoveDistance;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.AutoGroups.AutoGroup_Balance;
 import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
+import frc.robot.commands.AutoGroups.AutoGroup_MoveTest;
 import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCube;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCone;
 import frc.robot.commands.claw.IntakeEmergencyStop;
@@ -129,9 +130,10 @@ public class RobotContainer {
     // m_autoChooser.addOption("Place and Balance", new AutoGroup_PlaceAndBalance(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor, m_clawMotor));
     m_autoChooser.addOption("Leave and Balance", new AutoGroup_LeaveCommAndBalance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Balance", new AutoGroup_Balance(m_drivetrain, m_gyro));
-    m_autoChooser.addOption("Leave ", new MoveDistance(m_drivetrain, 5, false));
+    m_autoChooser.addOption("Leave ", new MoveDistance(m_drivetrain, 24, false));
     m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("Auto Cube Test", new AutoGroup_PickAndPlaceCube(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    // m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain, m_gyro));
     // m_autoChooser.addOption("Set Extender Distance", new ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
     main.add("Auto Routine", m_autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 
@@ -170,7 +172,7 @@ public class RobotContainer {
     // turn left 90 degrees
     // controllerButtons_drive.get("10").onTrue(new TurnBy(m_drivetrain, m_gyro, 90));
     // reset encoders
-    controllerButtons_drive.get("8").onTrue(resetEncodersCommand());
+    // controllerButtons_drive.get("8").onTrue(resetEncodersCommand());
     //  controllerButtons_drive.get("9").onTrue(new AutoGroup_MiddleDrop(m_drivetrain, m_pivotMotor, m_extensionMotor, m_clawMotor));
 
 
@@ -200,11 +202,11 @@ public class RobotContainer {
     // controllerButtons_arm.get("11").onTrue(new PivotAngle(m_pivotMotor, 90));
     // controllerButtons_arm.get("8").onTrue(resetEncodersCommand());
     // controllerButtons_arm.get("1").onTrue(new IntakeGrabContinuous(m_intake));
-    controllerButtons_arm.get("9").onTrue(new IntakeStop(m_intake));
+    controllerButtons_arm.get("6").onTrue(new IntakeStop(m_intake));
     // controllerButtons_arm.get("3").onTrue(new IntakeThrowContinuous(m_intake));
-    controllerButtons_arm.get("8").onTrue(new IntakeEmergencyStop(m_intake));
-    controllerButtons_arm.get("6").whileTrue(new IntakeGrab(m_intake));
-    controllerButtons_arm.get("7").whileTrue(new IntakeThrow(m_intake));
+    controllerButtons_arm.get("7").onTrue(new IntakeEmergencyStop(m_intake));
+    controllerButtons_arm.get("8").whileTrue(new IntakeGrab(m_intake));
+    controllerButtons_arm.get("9").whileTrue(new IntakeThrow(m_intake));
   }
 
   public Command getAutoInput() {
