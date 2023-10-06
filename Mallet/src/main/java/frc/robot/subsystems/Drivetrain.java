@@ -41,10 +41,11 @@ public class Drivetrain extends SubsystemBase {
     // We need to invert one side of the drivetrain so that positive voltages result in both sides moving forward. Depending on how your robot's gearbox is constructed, you might have to invert the left side instead.
     m_brMotor.setInverted(true);
     m_frMotor.setInverted(true);
-    m_leftEncoder.setPositionConversionFactor(Constants.K_WHEEL_PERIMETER_INCH);
-    m_rightEncoder.setPositionConversionFactor(Constants.K_WHEEL_PERIMETER_INCH);
-    m_leftBackEncoder.setPositionConversionFactor(Constants.K_WHEEL_PERIMETER_INCH);
-    m_rightBackEncoder.setPositionConversionFactor(Constants.K_WHEEL_PERIMETER_INCH);
+    double factor = Constants.K_WHEEL_RADIUS_INCH * (360.0/Constants.K_DRIVETRAIN_GEAR_RATIO)/180*Math.PI;
+    m_leftEncoder.setPositionConversionFactor(factor);
+    m_rightEncoder.setPositionConversionFactor(factor);
+    m_leftBackEncoder.setPositionConversionFactor(factor);
+    m_rightBackEncoder.setPositionConversionFactor(factor);
     
     resetEncoders();
   }

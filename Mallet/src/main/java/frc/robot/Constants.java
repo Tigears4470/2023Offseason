@@ -3,6 +3,8 @@ package frc.robot;
 public final class Constants {
     public static final double K_SPEED = 0.5; //speed for turning
     public static final double K_WHEEL_DIAMETER_INCH = 6; //diameter of the wheels in inches
+    public static final double K_WHEEL_RADIUS_INCH = 3; //diameter of the wheels in inches
+    public static final double K_DRIVETRAIN_GEAR_RATIO = 10.75;
     public static final double K_NEO_TICKS = 42;
     public static final double K_PI = 3.14;
     public static final double K_WHEEL_PERIMETER_INCH = K_WHEEL_DIAMETER_INCH * K_PI;
