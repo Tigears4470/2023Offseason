@@ -28,19 +28,16 @@ public class AutoGroup_PickAndPlaceCube extends SequentialCommandGroup {
             new ResetEncoders(drivetrain),
             new IntakeGrabInstant(m_intake),
             new PivotMoveToAngleWait(m_pivotMotor, 9),
-            new PivotMoveToAngleWait(m_pivotMotor, 95),
-            Commands.parallel(new MoveDistance(drivetrain, 36, false),
-                              new ExtenderSetPositionWait(m_extensionMotor, 10)),
+            new PivotMoveToAngleWait(m_pivotMotor, 92),
+            Commands.deadline(new WaitCommand(5), new MoveDistance(drivetrain, 36, false),
+                              new ExtenderSetPositionWait(m_extensionMotor, 11)),
             new IntakeThrowInstant(m_intake),
             new WaitCommand(0.5),
             new IntakeStop(m_intake),
             // in case it gets stuck on the platforms
-            Commands.deadline(new WaitCommand(3), new MoveDistance(drivetrain, 36, true),
-            new ExtenderSetPositionWait(m_extensionMotor, 0)),
-            new PivotMoveToAngleWait(m_pivotMotor, 50),
-            new PivotMoveToAngleWait(m_pivotMotor, 20),
-            new WaitCommand(0.5),
-            new PivotMoveToAngleWait(m_pivotMotor, 4)
+            Commands.parallel(new MoveDistance(drivetrain, 36, true),
+            new AutoGroup_RetractExtension(m_extensionMotor)),
+            new AutoGroup_LowerPivot(m_pivotMotor)
         );
     }
 }
