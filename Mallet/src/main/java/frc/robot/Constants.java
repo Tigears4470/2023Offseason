@@ -11,6 +11,11 @@ public final class Constants {
     public static final double K_WHEEL_PERIMETER_FEET = K_WHEEL_DIAMETER_INCH * K_PI / 12.0;
     public static final double K_TICKS_PER_INCH = K_NEO_TICKS / K_WHEEL_PERIMETER_INCH;
     public static final double K_TICKS_PER_FEET = K_NEO_TICKS / K_WHEEL_PERIMETER_FEET;
+
+    public static final double K_MOVE_AUTO_MID = 36.0;
+    public static final double K_MOVE_AUTO_LOW = 36.0;
+    public static final double K_ANGLE_AUTO_MID = 55.48;
+    public static final double K_ANGLE_AUTO_LOW = 15.0;
     // public static final double K_TICKS_PER_FEET = 40.964489;
     /*----------
         AUTO

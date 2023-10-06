@@ -20,7 +20,10 @@ import frc.robot.commands.AutoGroups.AutoGroup_Balance;
 import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_MoveTest;
 import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCube;
+import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCubeLow;
+import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCubeMid;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCone;
+import frc.robot.commands.AutoGroups.AutoGroup_RetractExtensionLowerPivot;
 import frc.robot.commands.claw.IntakeEmergencyStop;
 import frc.robot.commands.claw.IntakeGrab;
 import frc.robot.commands.claw.IntakeStop;
@@ -28,6 +31,7 @@ import frc.robot.commands.claw.IntakeThrow;
 import frc.robot.commands.extend.MoveExtenderBackwardsPID;
 import frc.robot.commands.extend.MoveExtenderForwardPID;
 import frc.robot.commands.pivot.PivotDownPID;
+import frc.robot.commands.pivot.PivotMoveToAngle;
 import frc.robot.commands.pivot.PivotUpPID;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExtensionSubPID;
@@ -134,6 +138,8 @@ public class RobotContainer {
     m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("Auto Cube Test", new AutoGroup_PickAndPlaceCube(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain));
+    m_autoChooser.addOption("Auto Cube Mid", new AutoGroup_PickAndPlaceCubeMid(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Low", new AutoGroup_PickAndPlaceCubeLow(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     // m_autoChooser.addOption("Set Extender Distance", new ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
     main.add("Auto Routine", m_autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 
@@ -207,6 +213,9 @@ public class RobotContainer {
     controllerButtons_arm.get("7").onTrue(new IntakeEmergencyStop(m_intake));
     controllerButtons_arm.get("8").whileTrue(new IntakeGrab(m_intake));
     controllerButtons_arm.get("9").whileTrue(new IntakeThrow(m_intake));
+
+    controllerButtons_drive.get("3").onTrue(new AutoGroup_RetractExtensionLowerPivot(m_extensionMotor, m_pivotMotor));
+    controllerButtons_drive.get("2").onTrue(new PivotMoveToAngle(m_pivotMotor, 92));
   }
 
   public Command getAutoInput() {
