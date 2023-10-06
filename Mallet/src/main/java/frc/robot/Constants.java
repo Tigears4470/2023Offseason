@@ -45,6 +45,8 @@ public final class Constants {
     public static final double K_MOVE_AUTO_HIGH = 36.0;
     public static final double K_ANGLE_AUTO_HIGH = 92.0;
 
+    // Leave Community Distance For Auto
+    public static final double K_LEAVE_COMMMUNITY_DIST = 4*12;
 
 
     //Turn By

@@ -25,7 +25,7 @@ public class ExtensionSubPID extends SubsystemBase{
   private double minPosition = -11;
   
   public ExtensionSubPID(){
-    if(K_PivotSub.isUsingPivot){
+    if(K_PivotSub.isUsingPivot) {
       motor = new CANSparkMax(6, MotorType.kBrushless);
       encoder = motor.getEncoder();
       pid = motor.getPIDController();
@@ -41,7 +41,7 @@ public class ExtensionSubPID extends SubsystemBase{
       desiredPosition = encoder.getPosition();
 
       // PID coefficients
-      kP = 0.00000006015; 
+      kP = 0.00000006015;
       kI = 0.0000005;
       kD = 0; 
       kIz = 0.005; 
@@ -50,7 +50,6 @@ public class ExtensionSubPID extends SubsystemBase{
       kMinOutput = -.2;
       // Smart Motion Coefficients
 
-      
       double rps = K_ExtSub.extInchesPerSecond / K_ExtSub.gearRadius / 2 / Math.PI;
       maxVel = rps*60*K_ExtSub.gearRatio; // inches
       maxAcc = maxVel*1.5;
@@ -98,7 +97,6 @@ public class ExtensionSubPID extends SubsystemBase{
         SmartDashboard.putNumber("Extension Allowed Closed Loop Error", allowedErr);
 
         // button to toggle between velocity and smart motion modes
-
         SmartDashboard.putBoolean("Extension Mode", true);
       }
     }

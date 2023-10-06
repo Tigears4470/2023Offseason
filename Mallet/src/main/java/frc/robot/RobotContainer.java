@@ -18,7 +18,6 @@ import frc.robot.commands.MoveDistance;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.AutoGroups.AutoGroup_Balance;
 import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
-import frc.robot.commands.AutoGroups.AutoGroup_MoveTest;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHigh;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommClose;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommFar;
@@ -85,13 +84,13 @@ public class RobotContainer {
   private GenericEntry entry_PivotMaxAngle = main.add("Pivot Max Angle", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
   // EXTENSION INFO
-  private GenericEntry entry_ExtEncoder = main.add("Ext Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
+  // private GenericEntry entry_ExtEncoder = main.add("Ext Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
   // LIMELIGHT INFO
   private GenericEntry entry_LimelightXOffset = main.add("LimelightXOffset", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
   private GenericEntry entry_LimelightYOffset = main.add("LimelightYOffset", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
-  private GenericEntry entry_ClawClosed = main.add("Is Claw Closed", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+  // private GenericEntry entry_ClawClosed = main.add("Is Claw Closed", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
 
   public RobotContainer() {
     configureButtonBindings();
@@ -140,7 +139,7 @@ public class RobotContainer {
     // m_autoChooser.addOption("Place and Balance", new AutoGroup_PlaceAndBalance(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor, m_clawMotor));
     m_autoChooser.addOption("Leave and Balance", new AutoGroup_LeaveCommAndBalance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Balance", new AutoGroup_Balance(m_drivetrain, m_gyro));
-    m_autoChooser.addOption("Leave ", new MoveDistance(m_drivetrain, 24, false));
+    m_autoChooser.addOption("Leave Community", new MoveDistance(m_drivetrain, Constants.K_LEAVE_COMMMUNITY_DIST, false));
     m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     // m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain));
 
@@ -232,7 +231,7 @@ public class RobotContainer {
     controllerButtons_arm.get("9").whileTrue(new IntakeThrow(m_intake));
 
     controllerButtons_drive.get("2").onTrue(new AutoGroup_RetractExtensionLowerPivot(m_extensionMotor, m_pivotMotor));
-    controllerButtons_drive.get("3").onTrue(new PivotMoveToAngle(m_pivotMotor, 92));
+    controllerButtons_drive.get("5").onTrue(new PivotMoveToAngle(m_pivotMotor, 92));
   }
 
   public Command getAutoInput() {
