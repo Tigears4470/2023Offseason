@@ -35,15 +35,20 @@ public final class Constants {
     /*
      * MOVE: How many inches to move forward after raising pivot and how many back object placed
      * ANGLE: How high to raise pivot when placing the object
+     * EXT: How far to extend towards the grid after raising the arm
      */
     public static final double K_MOVE_AUTO_LOW = 36.0; 
     public static final double K_ANGLE_AUTO_LOW = 15.0;
+    public static final double K_EXT_AUTO_LOW = 0;
+
 
     public static final double K_MOVE_AUTO_MID = 36.0;
     public static final double K_ANGLE_AUTO_MID = 70;
+    public static final double K_EXT_AUTO_MID = 2;
 
     public static final double K_MOVE_AUTO_HIGH = 36.0;
     public static final double K_ANGLE_AUTO_HIGH = 92.0;
+    public static final double K_EXT_AUTO_HIGH = 11;
 
     // Leave Community Distance For Auto
     public static final double K_LEAVE_COMMMUNITY_DIST = 4*12;

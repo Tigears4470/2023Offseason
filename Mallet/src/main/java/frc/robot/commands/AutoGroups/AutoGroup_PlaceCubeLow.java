@@ -11,6 +11,7 @@ import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.claw.IntakeGrabInstant;
 import frc.robot.commands.claw.IntakeStop;
 import frc.robot.commands.claw.IntakeThrowInstant;
+import frc.robot.commands.extend.ExtenderSetPositionWait;
 import frc.robot.commands.pivot.PivotMoveToAngleWait;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -28,7 +29,8 @@ public class AutoGroup_PlaceCubeLow extends SequentialCommandGroup {
             new IntakeGrabInstant(m_intake),
             new PivotMoveToAngleWait(m_pivotMotor, 9),
             new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_LOW),
-            Commands.deadline(new WaitCommand(5), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_LOW, false)),
+            Commands.deadline(new WaitCommand(3), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_LOW, false),
+            new ExtenderSetPositionWait(m_extensionMotor, Constants.K_EXT_AUTO_LOW)),
             new IntakeThrowInstant(m_intake),
             new WaitCommand(0.5),
             new IntakeStop(m_intake),
