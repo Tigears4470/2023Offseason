@@ -22,12 +22,21 @@ public final class Constants {
     public static final float K_TURN_ERROR_RANGE = 2f;
     public static final double K_DEC_TO_PI = 0.01745;
 
-    // Place Cube
-    public static final double K_LEAVE_COMMUNITY_FAR = 5*12;
-    public static final double K_LEAVE_COMMUNITY_CLOSE = 3*12;
+    // robot is 27 x 36 in    | 3 ft
+    // Different distances are 11ft 3/8in and 16 ft 1 1/4in
+    // GRID Depth 4ft 8 1/4 in
+    // Grid to Community 6 ft 4 1/4 in (close) and 11 ft 4 in (far)
+    
 
+    // Place Cube Constants
+    public static final double K_LEAVE_COMMUNITY_FAR = 10*12; // For Place Cube Autogroup Far
+    public static final double K_LEAVE_COMMUNITY_CLOSE = 6*12; // For Place Cube Autogroup Close
 
-    public static final double K_MOVE_AUTO_LOW = 36.0;
+    /*
+     * MOVE: How many inches to move forward after raising pivot and how many back object placed
+     * ANGLE: How high to raise pivot when placing the object
+     */
+    public static final double K_MOVE_AUTO_LOW = 36.0; 
     public static final double K_ANGLE_AUTO_LOW = 15.0;
 
     public static final double K_MOVE_AUTO_MID = 36.0;
@@ -47,7 +56,7 @@ public final class Constants {
     public static final double K_BALANCE_THRESH_DEG = 4.2; //angle at within which the robot is considered to be balanced
     public static final double K_FWD_SPEED = 0.47; //starting speed towards platform
     public static final double K_ADJUST_SPEED = .3;  //speed to adjust angle or brake
-    public static final double K_ADJUST_ROTATE = 0.1; //ask brent what this does
+    public static final double K_ADJUST_ROTATE = 0.1; // speed to adjust z-axis rotation incase slippage
 
     // Vision constants 
     public static final double K_LIMELIGHT_MOUNT_ANG_DEG = 25.0; // LIMELIGHT ANGLE FROM VERTICAL! NOT ANGLE OF ATTACK!
@@ -57,19 +66,19 @@ public final class Constants {
 
     public static final class K_ExtSub {
         public static final boolean isUsingExt = true;     //If is using the extension subsystem
-        public static final boolean devMode = false;
-        public static final double extInchesPerSecond = 12;
-        public static final int gearRatio = 60;
+        public static final boolean devMode = false; // Turn on ext dev mode
+        public static final double extInchesPerSecond = 12; // Max extension speed (motor speed itself already seems to be maxed out though)
+        public static final int gearRatio = 60; // Gear ratio for extension motor
         public static final double gearRadius = 14.0/16; // inches (measured from gear in contact with inner component)
         public static final double tolerance = 1; // 1 inch tolerance
     }
 
     public static final class K_PivotSub {
-        public static final boolean isUsingPivot = true;
-        public static final boolean devMode = true;
+        public static final boolean isUsingPivot = true;     //If is using the pivot subsystem
+        public static final boolean devMode = false; // Turn on pivot dev mode
         public static final double pivotSpeed = 3.5;
-        public static final int gearRatio = 60;
-        public static final double tolerance = 5; // 5 degree tolerance
+        public static final int gearRatio = 60; // Gear ratio of pivot motor
+        public static final double tolerance = 5; // 5 degree tolerance before ending PivotMoveToAngleWait
     }   
     
     public static final class K_IntakeSub{
@@ -80,7 +89,7 @@ public final class Constants {
         public static final double clampVoltage = 1.5;
         public static final double coneMaxCurrent = .3;
         public static final double cubeMaxCurrent = .2;
-        public static final double InVoltage = 4.5;
-        public static final double OutVoltage = 1.7;
+        public static final double InVoltage = 4.5; // Voltage at which intake sucks in
+        public static final double OutVoltage = 1.7; // Voltage at which intake throws out
     }
 }

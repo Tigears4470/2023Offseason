@@ -231,8 +231,8 @@ public class RobotContainer {
     controllerButtons_arm.get("8").whileTrue(new IntakeGrab(m_intake));
     controllerButtons_arm.get("9").whileTrue(new IntakeThrow(m_intake));
 
-    controllerButtons_drive.get("3").onTrue(new AutoGroup_RetractExtensionLowerPivot(m_extensionMotor, m_pivotMotor));
-    controllerButtons_drive.get("2").onTrue(new PivotMoveToAngle(m_pivotMotor, 92));
+    controllerButtons_drive.get("2").onTrue(new AutoGroup_RetractExtensionLowerPivot(m_extensionMotor, m_pivotMotor));
+    controllerButtons_drive.get("3").onTrue(new PivotMoveToAngle(m_pivotMotor, 92));
   }
 
   public Command getAutoInput() {
