@@ -48,7 +48,6 @@ public final class Constants {
     // Leave Community Distance For Auto
     public static final double K_LEAVE_COMMMUNITY_DIST = 4*12;
 
-
     //Turn By
     public static final float K_MIN_TURNING_SPEED = 0.2f; //minimum speed to turn at
     public static final float K_MAX_TURNING_SPEED = 0.5f; //maximum speed to turn at
