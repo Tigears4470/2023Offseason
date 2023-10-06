@@ -5,6 +5,7 @@ import frc.robot.subsystems.ExtensionSubPID;
 import frc.robot.subsystems.GyroScope;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.PivotSubPID;
+import frc.robot.Constants;
 import frc.robot.commands.MoveDistance;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.claw.IntakeGrabInstant;
@@ -16,9 +17,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class AutoGroup_PickAndPlaceCube extends SequentialCommandGroup {
+public class AutoGroup_PlaceCubeHigh extends SequentialCommandGroup {
     //Variables
-    public AutoGroup_PickAndPlaceCube(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake, ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor){
+    public AutoGroup_PlaceCubeHigh(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake, ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor){
         
         System.out.println("AutoGroup_Place");
         //Adding a drivetrain
@@ -28,14 +29,14 @@ public class AutoGroup_PickAndPlaceCube extends SequentialCommandGroup {
             new ResetEncoders(drivetrain),
             new IntakeGrabInstant(m_intake),
             new PivotMoveToAngleWait(m_pivotMotor, 9),
-            new PivotMoveToAngleWait(m_pivotMotor, 92),
-            Commands.deadline(new WaitCommand(5), new MoveDistance(drivetrain, 36, false),
+            new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_HIGH),
+            Commands.deadline(new WaitCommand(5), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_HIGH, false),
                               new ExtenderSetPositionWait(m_extensionMotor, 11)),
             new IntakeThrowInstant(m_intake),
             new WaitCommand(0.5),
             new IntakeStop(m_intake),
             // in case it gets stuck on the platforms
-            Commands.parallel(new MoveDistance(drivetrain, 36, true),
+            Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_HIGH, true),
             new AutoGroup_RetractExtension(m_extensionMotor)),
             new AutoGroup_LowerPivot(m_pivotMotor)
         );

@@ -12,10 +12,7 @@ public final class Constants {
     public static final double K_TICKS_PER_INCH = K_NEO_TICKS / K_WHEEL_PERIMETER_INCH;
     public static final double K_TICKS_PER_FEET = K_NEO_TICKS / K_WHEEL_PERIMETER_FEET;
 
-    public static final double K_MOVE_AUTO_MID = 36.0;
-    public static final double K_MOVE_AUTO_LOW = 36.0;
-    public static final double K_ANGLE_AUTO_MID = 55.48;
-    public static final double K_ANGLE_AUTO_LOW = 15.0;
+    
     // public static final double K_TICKS_PER_FEET = 40.964489;
     /*----------
         AUTO
@@ -24,6 +21,22 @@ public final class Constants {
     public static final double K_BACKWARDS_FEET = 6 * K_TICKS_PER_FEET; //6.572500
     public static final float K_TURN_ERROR_RANGE = 2f;
     public static final double K_DEC_TO_PI = 0.01745;
+
+    // Place Cube
+    public static final double K_LEAVE_COMMUNITY_FAR = 5*12;
+    public static final double K_LEAVE_COMMUNITY_CLOSE = 3*12;
+
+
+    public static final double K_MOVE_AUTO_LOW = 36.0;
+    public static final double K_ANGLE_AUTO_LOW = 15.0;
+
+    public static final double K_MOVE_AUTO_MID = 36.0;
+    public static final double K_ANGLE_AUTO_MID = 55.48;
+
+    public static final double K_MOVE_AUTO_HIGH = 36.0;
+    public static final double K_ANGLE_AUTO_HIGH = 92.0;
+
+
 
     //Turn By
     public static final float K_MIN_TURNING_SPEED = 0.2f; //minimum speed to turn at

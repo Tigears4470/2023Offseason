@@ -17,26 +17,29 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class AutoGroup_PickAndPlaceCubeLow extends SequentialCommandGroup {
+public class AutoGroup_PlaceCubeHighLeaveCommFar extends SequentialCommandGroup {
     //Variables
-    public AutoGroup_PickAndPlaceCubeLow(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake, ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor){
+    public AutoGroup_PlaceCubeHighLeaveCommFar(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake, ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor){
         
         System.out.println("AutoGroup_Place");
         //Adding a drivetrain
         //Adding Order of commands
+
         addCommands(
             new ResetEncoders(drivetrain),
             new IntakeGrabInstant(m_intake),
             new PivotMoveToAngleWait(m_pivotMotor, 9),
-            new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_LOW),
-            Commands.deadline(new WaitCommand(5), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_MID, false)),
+            new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_HIGH),
+            Commands.deadline(new WaitCommand(5), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_HIGH, false),
+                              new ExtenderSetPositionWait(m_extensionMotor, 11)),
             new IntakeThrowInstant(m_intake),
             new WaitCommand(0.5),
             new IntakeStop(m_intake),
             // in case it gets stuck on the platforms
-            Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_LOW, true),
+            Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_HIGH, true),
             new AutoGroup_RetractExtension(m_extensionMotor)),
-            new AutoGroup_LowerPivot(m_pivotMotor)
+            Commands.parallel(new AutoGroup_LowerPivot(m_pivotMotor),
+            new MoveDistance(drivetrain, Constants.K_LEAVE_COMMUNITY_FAR, true)) // Leave community afterwards
         );
     }
 }

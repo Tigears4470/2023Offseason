@@ -19,9 +19,15 @@ import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.AutoGroups.AutoGroup_Balance;
 import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_MoveTest;
-import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCube;
-import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCubeLow;
-import frc.robot.commands.AutoGroups.AutoGroup_PickAndPlaceCubeMid;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHigh;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommClose;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommFar;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeLow;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeLowLeaveCommClose;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeLowLeaveCommFar;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeMid;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeMidLeaveCommClose;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeMidLeaveCommFar;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCone;
 import frc.robot.commands.AutoGroups.AutoGroup_RetractExtensionLowerPivot;
 import frc.robot.commands.claw.IntakeEmergencyStop;
@@ -136,10 +142,21 @@ public class RobotContainer {
     m_autoChooser.addOption("Balance", new AutoGroup_Balance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Leave ", new MoveDistance(m_drivetrain, 24, false));
     m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube Test", new AutoGroup_PickAndPlaceCube(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain));
-    m_autoChooser.addOption("Auto Cube Mid", new AutoGroup_PickAndPlaceCubeMid(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube Low", new AutoGroup_PickAndPlaceCubeLow(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    // m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain));
+
+    m_autoChooser.addOption("Auto Cube Low", new AutoGroup_PlaceCubeLow(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Low & Leave Comm Far", new AutoGroup_PlaceCubeLowLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Low & Leave Comm Close", new AutoGroup_PlaceCubeLowLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+
+    m_autoChooser.addOption("Auto Cube Mid", new AutoGroup_PlaceCubeMid(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Mid & Leave Comm Far", new AutoGroup_PlaceCubeMidLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Mid & Leave Comm Close", new AutoGroup_PlaceCubeMidLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+
+    m_autoChooser.addOption("Auto Cube High", new AutoGroup_PlaceCubeHigh(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Leave Comm Far", new AutoGroup_PlaceCubeHighLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Leave Comm Close", new AutoGroup_PlaceCubeHighLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+
+
     // m_autoChooser.addOption("Set Extender Distance", new ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
     main.add("Auto Routine", m_autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 

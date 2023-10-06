@@ -11,16 +11,14 @@ import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.claw.IntakeGrabInstant;
 import frc.robot.commands.claw.IntakeStop;
 import frc.robot.commands.claw.IntakeThrowInstant;
-import frc.robot.commands.extend.ExtenderSetPositionWait;
-import frc.robot.commands.AutoGroups.AutoGroup_LowerPivot;
 import frc.robot.commands.pivot.PivotMoveToAngleWait;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class AutoGroup_PickAndPlaceCubeMid extends SequentialCommandGroup {
+public class AutoGroup_PlaceCubeMidLeaveCommFar extends SequentialCommandGroup {
     //Variables
-    public AutoGroup_PickAndPlaceCubeMid(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake, ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor){
+    public AutoGroup_PlaceCubeMidLeaveCommFar(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake, ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor){
         
         System.out.println("AutoGroup_Place");
         //Adding a drivetrain
@@ -37,7 +35,8 @@ public class AutoGroup_PickAndPlaceCubeMid extends SequentialCommandGroup {
             // in case it gets stuck on the platforms
             Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_MID, true),
             new AutoGroup_RetractExtension(m_extensionMotor)),
-            new AutoGroup_LowerPivot(m_pivotMotor)
+            Commands.parallel(new AutoGroup_LowerPivot(m_pivotMotor),
+            new MoveDistance(drivetrain, Constants.K_LEAVE_COMMUNITY_FAR, true)) // Leave community afterwards        
         );
     }
 }
