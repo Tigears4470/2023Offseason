@@ -95,7 +95,7 @@ public final class Constants {
         public static final double clampVoltage = 1.5;
         public static final double coneMaxCurrent = .3;
         public static final double cubeMaxCurrent = .2;
-        public static final double InVoltage = 4.5; // Voltage at which intake sucks in
+        public static final double InVoltage = 5; // Voltage at which intake sucks in
         public static final double OutVoltage = 1.7; // Voltage at which intake throws out
     }
 }

@@ -57,7 +57,7 @@ public class IntakeSub extends SubsystemBase{
     direction = Math.signum(newDirection);
     if (direction == 0) {
       if (isIntaking)
-        motor.setVoltage(-1.5);
+        motor.setVoltage(-2);
       else
         motor.setVoltage(0);
     }  
