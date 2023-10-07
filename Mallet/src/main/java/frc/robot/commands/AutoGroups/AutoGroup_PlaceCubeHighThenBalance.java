@@ -6,7 +6,7 @@ import frc.robot.subsystems.GyroScope;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.PivotSubPID;
 import frc.robot.Constants;
-import frc.robot.commands.AutoBalance;
+import frc.robot.commands.AngleAutoBalance;
 import frc.robot.commands.MoveDistance;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.claw.IntakeGrabInstant;
@@ -40,7 +40,7 @@ public class AutoGroup_PlaceCubeHighThenBalance extends SequentialCommandGroup {
             Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_HIGH, true),
             new AutoGroup_RetractExtension(m_extensionMotor)),
             new AutoGroup_LowerPivot(m_pivotMotor),
-            new AutoBalance(drivetrain, gyro, true)
+            new AngleAutoBalance(drivetrain, gyro, true)
         );
     }
 }
