@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.MoveDistance;
 import frc.robot.commands.ResetEncoders;
+import frc.robot.commands.AutoGroups.AutoGroup_AngleBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_Balance;
 import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHigh;
@@ -139,6 +140,7 @@ public class RobotContainer {
     // m_autoChooser.addOption("Place and Balance", new AutoGroup_PlaceAndBalance(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor, m_clawMotor));
     m_autoChooser.addOption("Leave and Balance", new AutoGroup_LeaveCommAndBalance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Balance", new AutoGroup_Balance(m_drivetrain, m_gyro));
+    m_autoChooser.addOption("Angle Auto Balance Test", new AutoGroup_AngleBalance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Leave Community", new MoveDistance(m_drivetrain, Constants.K_LEAVE_COMMMUNITY_DIST, false));
     m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     // m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain));
