@@ -73,17 +73,17 @@ public class Drivetrain extends SubsystemBase {
 
   public void setBalanceToCurrentPos(boolean backwards) {
     if (!backwards)
-      balancePosition = getAverageDistanceInch()-42.5;
+      balancePosition = getAverageDistanceInch()-2.5;
     else 
-      balancePosition = getAverageDistanceInch()+42.5;
+      balancePosition = getAverageDistanceInch()+2.5;
   }
 
   public void balance() {
-    double speed = (balancePosition - getAverageDistanceInch())/4;
-    if (Math.abs(speed) > .5) { // old for all was .45
-      speed = speed > 0 ? .5 : -.5;
+    // go in opposite direction of displacement
+    double speed = (balancePosition - getAverageDistanceInch())/10;
+    if (Math.abs(speed) > .1) { // old for all was .45
+      arcadeDrive(speed, 0);
     }
-    arcadeDrive(speed, 0);
   }
 
   // For when the time calls for it, run this
