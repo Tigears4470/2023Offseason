@@ -33,13 +33,13 @@ public class AutoGroup_PlaceCubeHighLeaveBalance extends SequentialCommandGroup 
             new PivotMoveToAngleWait(m_pivotMotor, 9),
             new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_HIGH),
             Commands.parallel(Commands.race(new MoveDistanceFast(drivetrain, 1.5*12, false), new WaitCommand(3.5)),
-                              new ExtenderSetPositionWait(m_extensionMotor, Constants.K_EXT_AUTO_HIGH)),
+                new ExtenderSetPositionWait(m_extensionMotor, Constants.K_EXT_AUTO_HIGH)),
             new IntakeThrowInstant(m_intake),
             new WaitCommand(0.2),
             new IntakeStop(m_intake),
             // in case it gets stuck on the platforms
             Commands.parallel(new MoveDistanceFast(drivetrain, 15*12, true),
-            new AutoGroup_RetractExtension(m_extensionMotor).andThen(new AutoGroup_LowerPivot(m_pivotMotor))),
+                new AutoGroup_RetractExtension(m_extensionMotor).andThen(new AutoGroup_LowerPivot(m_pivotMotor))),
             new AngleAutoBalance(drivetrain, gyro, false)
         );
     }
