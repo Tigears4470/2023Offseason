@@ -31,7 +31,7 @@ public class AutoGroup_PlaceCubeHighThenBalance extends SequentialCommandGroup {
             new IntakeGrabInstant(m_intake),
             new PivotMoveToAngleWait(m_pivotMotor, 9),
             new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_HIGH),
-            Commands.deadline(new WaitCommand(4), new MoveDistance(drivetrain, 1.5*12, false),
+            Commands.parallel(Commands.race(new WaitCommand(4), new MoveDistance(drivetrain, 1.5*12, false)),
                               new ExtenderSetPositionWait(m_extensionMotor, Constants.K_EXT_AUTO_HIGH)),
             new IntakeThrowInstant(m_intake),
             new WaitCommand(0.5),
