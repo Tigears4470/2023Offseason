@@ -29,7 +29,7 @@ public final class Constants {
     
 
     // Place Cube Constants
-    public static final double K_LEAVE_COMMUNITY_FAR = 10*12; // For Place Cube Autogroup Far
+    public static final double K_LEAVE_COMMUNITY_FAR = 13*12; // For Place Cube Autogroup Far
     public static final double K_LEAVE_COMMUNITY_CLOSE = 6*12; // For Place Cube Autogroup Close
 
     /*
