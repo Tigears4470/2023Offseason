@@ -42,16 +42,19 @@ public class AngleAutoBalance extends CommandBase {
   @Override
   public void execute() {
     double pitchAngleDegrees = m_gyro.getAngleX();
+    pitchAngleDegrees+=m_gyro.getAngleX();
+    pitchAngleDegrees+=m_gyro.getAngleX();
+    pitchAngleDegrees/=3.0; 
     if (!isBalancing)
     {
-      m_drivetrain.arcadeDrive(backwardsScaler*.42, 0); // competition .34
+      m_drivetrain.arcadeDrive(backwardsScaler*.5, 0); // competition .34
       // if at high enough angle so we know it is on the platform
       if (Math.abs(pitchAngleDegrees) > Constants.K_PLAT_DEGREE_THRESH)
         isBalancing = true;
     }
     else {
       if(Math.abs(pitchAngleDegrees) > 2) {
-        double rate = Math.signum(pitchAngleDegrees)*.00015*Math.pow(pitchAngleDegrees, 2)+0.1; // slightly parabolic better than linear
+        double rate = Math.signum(pitchAngleDegrees)*Math.min((.003*Math.pow(pitchAngleDegrees, 2.0)+0.1),0.5); // slightly parabolic better than linear
         m_drivetrain.arcadeDrive(rate, 0);
       } else {
         m_drivetrain.arcadeDrive(0, 0);

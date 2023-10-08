@@ -22,6 +22,7 @@ import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHigh;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommClose;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommFar;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighThenBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeLow;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeLowLeaveCommClose;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeLowLeaveCommFar;
@@ -156,6 +157,8 @@ public class RobotContainer {
     m_autoChooser.addOption("Auto Cube High", new AutoGroup_PlaceCubeHigh(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("Auto Cube High & Leave Comm Far", new AutoGroup_PlaceCubeHighLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("Auto Cube High & Leave Comm Close", new AutoGroup_PlaceCubeHighLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Balance", new AutoGroup_PlaceCubeHighThenBalance(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+
 
 
     // m_autoChooser.addOption("Set Extender Distance", new ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
