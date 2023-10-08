@@ -4,6 +4,7 @@ import frc.robot.subsystems.GyroScope;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.K_AngleAutoBalance;
 
 public class AngleAutoBalance extends CommandBase {
   private final GyroScope m_gyro;
@@ -54,7 +55,7 @@ public class AngleAutoBalance extends CommandBase {
     }
     else {
       if(Math.abs(pitchAngleDegrees) > 2) {
-        double rate = Math.signum(pitchAngleDegrees)*Math.min((.003*Math.pow(pitchAngleDegrees, 2.0)+0.1),0.5); // slightly parabolic better than linear
+        double rate = Math.signum(pitchAngleDegrees)*Math.min((K_AngleAutoBalance.adjustmentFactorCoefficient*Math.pow(pitchAngleDegrees, 2.0)+K_AngleAutoBalance.adjustmentFactorOffset),0.5); // slightly parabolic better than linear
         m_drivetrain.arcadeDrive(rate, 0);
       } else {
         m_drivetrain.arcadeDrive(0, 0);

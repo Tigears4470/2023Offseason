@@ -64,11 +64,17 @@ public final class Constants {
     public static final double K_ADJUST_SPEED = .3;  //speed to adjust angle or brake
     public static final double K_ADJUST_ROTATE = 0.1; // speed to adjust z-axis rotation incase slippage
 
+    
+
     // Vision constants 
     public static final double K_LIMELIGHT_MOUNT_ANG_DEG = 25.0; // LIMELIGHT ANGLE FROM VERTICAL! NOT ANGLE OF ATTACK!
     public static final double K_LIMELIGHT_LENS_HEIGHT_INCH = 20.0; // HEIGHT FROM FLOOR OF LIMELIGHT
 
-
+    // Angle Auto Balance
+    public static final class K_AngleAutoBalance {
+        public static final double adjustmentFactorCoefficient = .003;
+        public static final double adjustmentFactorOffset = 0.1;
+    }
 
     public static final class K_ExtSub {
         public static final boolean isUsingExt = true;     //If is using the extension subsystem
