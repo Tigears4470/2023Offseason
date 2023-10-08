@@ -72,7 +72,7 @@ public final class Constants {
 
     // Angle Auto Balance
     public static final class K_AngleAutoBalance {
-        public static final double adjustmentFactorCoefficient = .003;
+        public static final double adjustmentFactorCoefficient = .0035; //.003 worked once
         public static final double adjustmentFactorOffset = 0.1;
     }
 

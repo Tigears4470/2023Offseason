@@ -20,6 +20,7 @@ import frc.robot.commands.AutoGroups.AutoGroup_AngleBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_Balance;
 import frc.robot.commands.AutoGroups.AutoGroup_LeaveCommAndBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHigh;
+import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveBalance;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommClose;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighLeaveCommFar;
 import frc.robot.commands.AutoGroups.AutoGroup_PlaceCubeHighThenBalance;
@@ -158,6 +159,7 @@ public class RobotContainer {
     m_autoChooser.addOption("Auto Cube High & Leave Comm Far", new AutoGroup_PlaceCubeHighLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("Auto Cube High & Leave Comm Close", new AutoGroup_PlaceCubeHighLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     m_autoChooser.addOption("Auto Cube High & Balance", new AutoGroup_PlaceCubeHighThenBalance(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Leave & Balance", new AutoGroup_PlaceCubeHighLeaveBalance(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
 
 
 
