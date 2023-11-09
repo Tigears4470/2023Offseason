@@ -7,6 +7,7 @@ import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.PivotSubPID;
 import frc.robot.Constants;
 import frc.robot.commands.MoveDistance;
+import frc.robot.commands.MoveDistanceFast;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.claw.IntakeGrabInstant;
 import frc.robot.commands.claw.IntakeStop;
@@ -33,13 +34,13 @@ public class AutoGroup_PlaceCubeHighLeaveCommFar extends SequentialCommandGroup 
             Commands.parallel(Commands.race(new WaitCommand(4.5), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_HIGH, false)),
                 new ExtenderSetPositionWait(m_extensionMotor, Constants.K_EXT_AUTO_HIGH)),
             new IntakeThrowInstant(m_intake),
-            new WaitCommand(0.5),
+            new WaitCommand(0.2),
             new IntakeStop(m_intake),
             // in case it gets stuck on the platforms
             Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_HIGH, true),
                 new AutoGroup_RetractExtension(m_extensionMotor)),
             Commands.parallel(new AutoGroup_LowerPivot(m_pivotMotor),
-                new MoveDistance(drivetrain, Constants.K_LEAVE_COMMUNITY_FAR, true)) // Leave community afterwards
+                new MoveDistanceFast(drivetrain, Constants.K_LEAVE_COMMUNITY_FAR, true)) // Leave community afterwards
         );
     }
 }
