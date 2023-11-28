@@ -1,4 +1,5 @@
 package frc.robot.commands;
+
 import frc.robot.Constants;
 import frc.robot.subsystems.GyroScope;
 import frc.robot.subsystems.Drivetrain;
@@ -12,21 +13,24 @@ public class AutoBalance extends CommandBase {
   private boolean onPlatform;
   private boolean isBackwards;
   private int backwardsScaler;
-  
+
   /**
-   * Creates a new AutoBalance. This command balances the robot on the charging station. 
-   * THIS WILL ONLY WORK IF THE ROBOT'S X ANGLE STARTS OFF POSITIVE (IMU orientation)
+   * Creates a new AutoBalance. This command balances the robot on the charging
+   * station.
+   * THIS WILL ONLY WORK IF THE ROBOT'S X ANGLE STARTS OFF POSITIVE (IMU
+   * orientation)
    * This command does not terminate.
    *
    * @param drivetrain The drivetrain subsystem on which this command will run
-   * @param gyro The gyro subsystem on which this command will run
+   * @param gyro       The gyro subsystem on which this command will run
    */
   public AutoBalance(Drivetrain drivetrain, GyroScope gyro, boolean backwards) {
     startBalancing = false;
     onPlatform = false;
 
-    // if starting from other side of charger, go backwards and change which side is other side
-    backwardsScaler = backwards ? -1 : 1; 
+    // if starting from other side of charger, go backwards and change which side is
+    // other side
+    backwardsScaler = backwards ? -1 : 1;
     isBackwards = backwards;
     m_gyro = gyro;
     m_drivetrain = drivetrain;
@@ -44,20 +48,18 @@ public class AutoBalance extends CommandBase {
   @Override
   public void execute() {
     double pitchAngleDegrees = m_gyro.getAngleX();
-    if (!startBalancing)
-    {
-      m_drivetrain.arcadeDrive(backwardsScaler*.42, 0); // competition .34
+    if (!startBalancing) {
+      m_drivetrain.arcadeDrive(backwardsScaler * .42, 0); // competition .34
       // if at high enough angle so we know it is on the platform
       if (Math.abs(pitchAngleDegrees) > Constants.K_PLAT_DEGREE_THRESH)
         onPlatform = true;
-      
+
       // if on platform and tilted to the other side of the charger
       if (onPlatform && (backwardsScaler == 1 ? pitchAngleDegrees < 0 : pitchAngleDegrees > 0)) {
         m_drivetrain.setBalanceToCurrentPos(isBackwards);
         startBalancing = true;
       }
-    }
-    else {
+    } else {
       m_drivetrain.balance();
       SmartDashboard.putBoolean("Balancing", true);
     }
@@ -65,7 +67,8 @@ public class AutoBalance extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

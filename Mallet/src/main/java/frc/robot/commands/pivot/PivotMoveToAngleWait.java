@@ -3,8 +3,7 @@ package frc.robot.commands.pivot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PivotSubPID;
 
-
-public class PivotMoveToAngleWait extends CommandBase{
+public class PivotMoveToAngleWait extends CommandBase {
     // Required Subsystems
     private PivotSubPID m_pivot;
     private double m_finalAngle;
@@ -15,7 +14,7 @@ public class PivotMoveToAngleWait extends CommandBase{
         addRequirements(m_pivot);
     }
 
-    public PivotMoveToAngleWait(PivotSubPID pivot, double angle){
+    public PivotMoveToAngleWait(PivotSubPID pivot, double angle) {
         m_pivot = pivot;
         m_finalAngle = angle;
         addRequirements(m_pivot);
@@ -33,14 +32,17 @@ public class PivotMoveToAngleWait extends CommandBase{
     }
 
     // Called once the command ends or is interrupted.
-    // Nothing is called here as it is covered already in the subsystem to stop the motor.
+    // Nothing is called here as it is covered already in the subsystem to stop the
+    // motor.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        //Checks to see if the motor is close to the desired angle before ending (for command groups)
+        // Checks to see if the motor is close to the desired angle before ending (for
+        // command groups)
         return m_pivot.withinTolerance();
     }
 }

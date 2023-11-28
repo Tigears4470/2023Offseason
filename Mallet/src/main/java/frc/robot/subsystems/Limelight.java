@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 import java.util.HashMap;
 
 import edu.wpi.first.networktables.*;
@@ -29,7 +30,7 @@ public class Limelight extends SubsystemBase {
     pipelineMap.put("cone", 3);
     pipelineMap.put("aprilTag", 4);
 
-// initialize network tables
+    // initialize network tables
     inst = NetworkTableInstance.getDefault();
     table = inst.getTable("limelight");
     // is there a target? (0 or 1)
@@ -42,46 +43,47 @@ public class Limelight extends SubsystemBase {
     ta = table.getEntry("ta");
     // pipeline index data entry
     pipelineIndex = table.getEntry("pipeline");
-    
-    //set pipeline to cone and cube
+
+    // set pipeline to cone and cube
     pipelineIndex.setDouble(5);
   }
 
   // get x angle offset in degrees
-  public double getXOffset(){
+  public double getXOffset() {
     return tx.getDouble(0.0);
   }
 
   // get y angle offset in degrees
-  public double getYOffset(){
+  public double getYOffset() {
     return ty.getDouble(0.0);
   }
 
   // is there a target?
-  public boolean isTarget(){
+  public boolean isTarget() {
     return tv.getDouble(0.0) == 0 ? false : true;
-    
+
   }
 
   // get target area in percent
-  public double getArea(){
+  public double getArea() {
     return ta.getDouble(0.0);
   }
 
   // return distance to target in inches(ASK SEAMUS)
-  public double getDistance(double param){
+  public double getDistance(double param) {
     double angleToGoalDegrees = Constants.K_LIMELIGHT_MOUNT_ANG_DEG + getYOffset();
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-    return (param - Constants.K_LIMELIGHT_LENS_HEIGHT_INCH)/Math.tan(angleToGoalRadians);
+    return (param - Constants.K_LIMELIGHT_LENS_HEIGHT_INCH) / Math.tan(angleToGoalRadians);
   }
 
-/*  index 0-9 ( MUST VERIFY )
- *  0 : retroreflective
- *  1 : cone and cube
- *  2 : cube
- *  3 : cone  (NEED TO ADD)
- *  4 : april tags
- */
+  /*
+   * index 0-9 ( MUST VERIFY )
+   * 0 : retroreflective
+   * 1 : cone and cube
+   * 2 : cube
+   * 3 : cone (NEED TO ADD)
+   * 4 : april tags
+   */
   public void setPipeline(double index) {
     pipelineIndex.setDouble(index);
   }
@@ -92,19 +94,19 @@ public class Limelight extends SubsystemBase {
 
   public void nextPipeline() {
     // if (curIndex < pipelineMap.size()) {
-    //   setPipeline(curIndex + 1);
-    //   curIndex++;
+    // setPipeline(curIndex + 1);
+    // curIndex++;
     // } else {
-    //   setPipeline(0);
-    //   curIndex=0;
+    // setPipeline(0);
+    // curIndex=0;
     // }
   }
 
   // returns true if target present and area is over the threshold
-  public boolean validTargetFound(){
+  public boolean validTargetFound() {
     return isTarget() && getArea() > 3.0;
   }
-  
+
   @Override
   public void periodic() {
   }

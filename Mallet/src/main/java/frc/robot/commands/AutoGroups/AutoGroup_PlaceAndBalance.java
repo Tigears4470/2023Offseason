@@ -8,15 +8,17 @@
 // import frc.robot.commands.AutoBalance;
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-
 // public class AutoGroup_PlaceAndBalance extends SequentialCommandGroup {
-//     //Variables
-//     public AutoGroup_PlaceAndBalance(Drivetrain drivetrain, GyroScope gyro, PivotSubPID m_pivotMotor, ExtensionSubPID m_extensionMotor, ClawSub m_clawMotor){
-//         //Adding a drivetrain
-//         //Adding Order of commands
-//         addCommands(
-//             new AutoGroup_MiddleDrop(drivetrain, m_pivotMotor, m_extensionMotor, m_clawMotor),
-//             new AutoBalance(drivetrain, gyro, true)
-//         );
-//     }
+// //Variables
+// public AutoGroup_PlaceAndBalance(Drivetrain drivetrain, GyroScope gyro,
+// PivotSubPID m_pivotMotor, ExtensionSubPID m_extensionMotor, ClawSub
+// m_clawMotor){
+// //Adding a drivetrain
+// //Adding Order of commands
+// addCommands(
+// new AutoGroup_MiddleDrop(drivetrain, m_pivotMotor, m_extensionMotor,
+// m_clawMotor),
+// new AutoBalance(drivetrain, gyro, true)
+// );
+// }
 // }

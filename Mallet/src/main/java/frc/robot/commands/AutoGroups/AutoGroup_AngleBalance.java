@@ -7,18 +7,17 @@ import frc.robot.commands.AngleAutoBalance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutoGroup_AngleBalance extends SequentialCommandGroup {
-    //Variables
-    public AutoGroup_AngleBalance(Drivetrain drivetrain, GyroScope gyro){
+    // Variables
+    public AutoGroup_AngleBalance(Drivetrain drivetrain, GyroScope gyro) {
         System.out.println("AutoGroup_Balance");
-        //Adding a drivetrain
-        //Adding Order of commands
+        // Adding a drivetrain
+        // Adding Order of commands
 
         addCommands(
-            new ResetEncoders(drivetrain),
+                new ResetEncoders(drivetrain),
 
-            // balance
-            // new AutoBalance(drivetrain, gyro, false)
-            new AngleAutoBalance(drivetrain, gyro, true)
-        );
+                // balance
+                // new AutoBalance(drivetrain, gyro, false)
+                new AngleAutoBalance(drivetrain, gyro, true));
     }
 }

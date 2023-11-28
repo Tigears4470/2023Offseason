@@ -5,17 +5,18 @@ import frc.robot.subsystems.GyroScope;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
 public class DriveTillPlatform extends CommandBase {
   private final GyroScope m_gyro;
   private final Drivetrain m_drivetrain;
-  
+
   /**
-   * Creates a new AutoBalance. This command drives until the gyro detects that we are at a slant.
-   * If we are at a slant, then we are on the platform. This command terminates when it detects that.
+   * Creates a new AutoBalance. This command drives until the gyro detects that we
+   * are at a slant.
+   * If we are at a slant, then we are on the platform. This command terminates
+   * when it detects that.
    *
    * @param drivetrain The drivetrain subsystem on which this command will run
-   * @param gyro The gyro subsystem on which this command will run
+   * @param gyro       The gyro subsystem on which this command will run
    */
   public DriveTillPlatform(Drivetrain drivetrain, GyroScope t_gyro) {
     m_gyro = t_gyro;
@@ -38,7 +39,8 @@ public class DriveTillPlatform extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

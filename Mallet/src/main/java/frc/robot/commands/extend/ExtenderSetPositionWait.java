@@ -3,19 +3,19 @@ package frc.robot.commands.extend;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ExtensionSubPID;
 
-
-public class ExtenderSetPositionWait extends CommandBase{
+public class ExtenderSetPositionWait extends CommandBase {
     // Required Subsystems
     private ExtensionSubPID m_extender;
     private double m_finalPosition;
 
     // Creation Function of the Class
-    public ExtenderSetPositionWait(ExtensionSubPID ext){
+    public ExtenderSetPositionWait(ExtensionSubPID ext) {
         m_extender = ext;
         m_finalPosition = m_extender.getDesiredPosition();
         addRequirements(m_extender);
     }
-    public ExtenderSetPositionWait(ExtensionSubPID ext, double position){
+
+    public ExtenderSetPositionWait(ExtensionSubPID ext, double position) {
         m_extender = ext;
         m_finalPosition = position;
         addRequirements(m_extender);
@@ -34,9 +34,11 @@ public class ExtenderSetPositionWait extends CommandBase{
     }
 
     // Called once the command ends or is interrupted.
-    // Nothing is called here as it is covered already in the subsystem to stop the motor.
+    // Nothing is called here as it is covered already in the subsystem to stop the
+    // motor.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 
     // Returns true when the command should end.
     // may backfire if extender due to voltage cannot reach within range

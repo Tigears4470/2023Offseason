@@ -67,7 +67,8 @@ public class RobotContainer {
   public static HashMap<String, Trigger> controllerButtons_drive = new HashMap<String, Trigger>();
 
   // SMARTDASHBOARD
-  // private SendableChooser<String> m_autoChooser = new SendableChooser<String>();
+  // private SendableChooser<String> m_autoChooser = new
+  // SendableChooser<String>();
   private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
   // SHUFFLEBOARD
@@ -80,20 +81,23 @@ public class RobotContainer {
    */
   private GenericEntry entry_GyroZ = main.add("Yaw (Side to Side)", 0).withWidget(BuiltInWidgets.kGyro).getEntry();
   // CLAW INFO
-  // private GenericEntry entry_ClawEncoder = main.add("Claw Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
+  // private GenericEntry entry_ClawEncoder = main.add("Claw Encoder",
+  // 0).withWidget(BuiltInWidgets.kTextView).getEntry();
   // PIVOT INFO
   private GenericEntry entry_PivotEncoder = main.add("Pivot Encoder", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
   private GenericEntry entry_PivotMaxAngle = main.add("Pivot Max Angle", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
   // EXTENSION INFO
-  // private GenericEntry entry_ExtEncoder = main.add("Ext Encoder", 0).withWidget(BuiltInWidgets.kTextView).getEntry();
+  // private GenericEntry entry_ExtEncoder = main.add("Ext Encoder",
+  // 0).withWidget(BuiltInWidgets.kTextView).getEntry();
   // LIMELIGHT INFO
   private GenericEntry entry_LimelightXOffset = main.add("LimelightXOffset", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
   private GenericEntry entry_LimelightYOffset = main.add("LimelightYOffset", 0).withWidget(BuiltInWidgets.kTextView)
       .getEntry();
-  // private GenericEntry entry_ClawClosed = main.add("Is Claw Closed", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+  // private GenericEntry entry_ClawClosed = main.add("Is Claw Closed",
+  // false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
 
   public RobotContainer() {
     configureButtonBindings();
@@ -134,36 +138,54 @@ public class RobotContainer {
     // m_autoChooser.addOption("Place and Leave", "Place and Leave");
     // m_autoChooser.addOption("Place and Balance", "Place and Balance");
     // m_autoChooser.addOption("Leave and Balance", "Leave and Balance");
-    
+
     // with command chooser
     m_autoChooser.setDefaultOption("Do Nothing", new WaitCommand(0));
-    // m_autoChooser.addOption("Place and Leave", new AutoGroup_PlaceAndLeave(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor, m_clawMotor));
-    // m_autoChooser.addOption("Grab Claw and Drop Middle", new AutoGroup_MiddleDrop(m_drivetrain, m_pivotMotor, m_extensionMotor, m_clawMotor));
-    // m_autoChooser.addOption("Place and Balance", new AutoGroup_PlaceAndBalance(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor, m_clawMotor));
+    // m_autoChooser.addOption("Place and Leave", new
+    // AutoGroup_PlaceAndLeave(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor,
+    // m_clawMotor));
+    // m_autoChooser.addOption("Grab Claw and Drop Middle", new
+    // AutoGroup_MiddleDrop(m_drivetrain, m_pivotMotor, m_extensionMotor,
+    // m_clawMotor));
+    // m_autoChooser.addOption("Place and Balance", new
+    // AutoGroup_PlaceAndBalance(m_drivetrain, m_gyro, m_pivotMotor,
+    // m_extensionMotor, m_clawMotor));
     m_autoChooser.addOption("Leave and Balance", new AutoGroup_LeaveCommAndBalance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Balance", new AutoGroup_Balance(m_drivetrain, m_gyro));
     m_autoChooser.addOption("Angle Auto Balance Test", new AutoGroup_AngleBalance(m_drivetrain, m_gyro));
-    m_autoChooser.addOption("Leave Community", new MoveDistance(m_drivetrain, Constants.K_LEAVE_COMMMUNITY_DIST, false));
-    m_autoChooser.addOption("Auto Cone Test", new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Leave Community",
+        new MoveDistance(m_drivetrain, Constants.K_LEAVE_COMMMUNITY_DIST, false));
+    m_autoChooser.addOption("Auto Cone Test",
+        new AutoGroup_PlaceCone(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
     // m_autoChooser.addOption("MoveTest", new AutoGroup_MoveTest(m_drivetrain));
 
-    m_autoChooser.addOption("Auto Cube Low", new AutoGroup_PlaceCubeLow(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube Low & Leave Comm Far", new AutoGroup_PlaceCubeLowLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube Low & Leave Comm Close", new AutoGroup_PlaceCubeLowLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Low",
+        new AutoGroup_PlaceCubeLow(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Low & Leave Comm Far",
+        new AutoGroup_PlaceCubeLowLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Low & Leave Comm Close",
+        new AutoGroup_PlaceCubeLowLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
 
-    m_autoChooser.addOption("Auto Cube Mid", new AutoGroup_PlaceCubeMid(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube Mid & Leave Comm Far", new AutoGroup_PlaceCubeMidLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube Mid & Leave Comm Close", new AutoGroup_PlaceCubeMidLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Mid",
+        new AutoGroup_PlaceCubeMid(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Mid & Leave Comm Far",
+        new AutoGroup_PlaceCubeMidLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube Mid & Leave Comm Close",
+        new AutoGroup_PlaceCubeMidLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
 
-    m_autoChooser.addOption("Auto Cube High", new AutoGroup_PlaceCubeHigh(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube High & Leave Comm Far", new AutoGroup_PlaceCubeHighLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube High & Leave Comm Close", new AutoGroup_PlaceCubeHighLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube High & Balance", new AutoGroup_PlaceCubeHighThenBalance(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
-    m_autoChooser.addOption("Auto Cube High & Leave & Balance", new AutoGroup_PlaceCubeHighLeaveBalance(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High",
+        new AutoGroup_PlaceCubeHigh(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Leave Comm Far",
+        new AutoGroup_PlaceCubeHighLeaveCommFar(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Leave Comm Close",
+        new AutoGroup_PlaceCubeHighLeaveCommClose(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Balance",
+        new AutoGroup_PlaceCubeHighThenBalance(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
+    m_autoChooser.addOption("Auto Cube High & Leave & Balance",
+        new AutoGroup_PlaceCubeHighLeaveBalance(m_drivetrain, m_gyro, m_intake, m_extensionMotor, m_pivotMotor));
 
-
-
-    // m_autoChooser.addOption("Set Extender Distance", new ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
+    // m_autoChooser.addOption("Set Extender Distance", new
+    // ExtenderSetPositionWaitForComplete(m_extensionMotor, 4));
     main.add("Auto Routine", m_autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser);
 
   }
@@ -177,37 +199,46 @@ public class RobotContainer {
     // Add joystick buttons to maps
     controllerButtons_drive.put("trigger", new JoystickButton(m_controller_drive, 1));
     controllerButtons_arm.put("trigger", new JoystickButton(m_controller_arm, 1));
-    for (int i = 1; i <= 11; i++)
-    {
+    for (int i = 1; i <= 11; i++) {
       controllerButtons_arm.put(Integer.toString(i), new JoystickButton(m_controller_arm, i));
       controllerButtons_drive.put(Integer.toString(i), new JoystickButton(m_controller_drive, i));
     }
 
-    //DRIVE CONTROLLER
+    // DRIVE CONTROLLER
     // rotate to target
-    // controllerButtons_drive.get("trigger").onTrue(new TurnToTarget(m_drivetrain, m_gyro, m_limelight));
+    // controllerButtons_drive.get("trigger").onTrue(new TurnToTarget(m_drivetrain,
+    // m_gyro, m_limelight));
     // middle platform
-    // controllerButtons_drive.get("2").onTrue(new Group_Angle60(m_extensionMotor, m_pivotMotor));
+    // controllerButtons_drive.get("2").onTrue(new Group_Angle60(m_extensionMotor,
+    // m_pivotMotor));
     // high platform
-    // controllerButtons_drive.get("3").onTrue(new Group_Angle90(m_extensionMotor, m_pivotMotor));
-    // floor pickup position 
-    // controllerButtons_drive.get("4").onTrue(new Group_Angle40(m_extensionMotor, m_pivotMotor));
+    // controllerButtons_drive.get("3").onTrue(new Group_Angle90(m_extensionMotor,
+    // m_pivotMotor));
+    // floor pickup position
+    // controllerButtons_drive.get("4").onTrue(new Group_Angle40(m_extensionMotor,
+    // m_pivotMotor));
     // turn to 180 degrees
-    // controllerButtons_drive.get("7").onTrue(new TurnToMatch(m_drivetrain, m_gyro, 180));
+    // controllerButtons_drive.get("7").onTrue(new TurnToMatch(m_drivetrain, m_gyro,
+    // 180));
     // turn to 0 degrees
-    // controllerButtons_drive.get("6").onTrue(new TurnToMatch(m_drivetrain, m_gyro, 0));
+    // controllerButtons_drive.get("6").onTrue(new TurnToMatch(m_drivetrain, m_gyro,
+    // 0));
     // turn left 90 degrees
-    // controllerButtons_drive.get("11").onTrue(new TurnBy(m_drivetrain, m_gyro, -90));
+    // controllerButtons_drive.get("11").onTrue(new TurnBy(m_drivetrain, m_gyro,
+    // -90));
     // turn left 90 degrees
-    // controllerButtons_drive.get("10").onTrue(new TurnBy(m_drivetrain, m_gyro, 90));
+    // controllerButtons_drive.get("10").onTrue(new TurnBy(m_drivetrain, m_gyro,
+    // 90));
     // reset encoders
     // controllerButtons_drive.get("8").onTrue(resetEncodersCommand());
-    //  controllerButtons_drive.get("9").onTrue(new AutoGroup_MiddleDrop(m_drivetrain, m_pivotMotor, m_extensionMotor, m_clawMotor));
+    // controllerButtons_drive.get("9").onTrue(new
+    // AutoGroup_MiddleDrop(m_drivetrain, m_pivotMotor, m_extensionMotor,
+    // m_clawMotor));
 
-
-    //ARM CONTROLLER
+    // ARM CONTROLLER
     // toggle claw clamp
-    // controllerButtons_arm.get("1").toggleOnTrue(Commands.startEnd(m_clawMotor::clamp2, m_clawMotor::moveMotors, m_clawMotor));
+    // controllerButtons_arm.get("1").toggleOnTrue(Commands.startEnd(m_clawMotor::clamp2,
+    // m_clawMotor::moveMotors, m_clawMotor));
     // controllerButtons_arm.get("trigger").onTrue(new ClawToggle(m_clawMotor));
     // moves pivot down
     controllerButtons_arm.get("2").whileTrue(new PivotDownPID(m_pivotMotor));
@@ -218,15 +249,20 @@ public class RobotContainer {
     // extends arm
     controllerButtons_arm.get("5").whileTrue(new MoveExtenderForwardPID(m_extensionMotor));
     // // select cube mode
-    // controllerButtons_arm.get("6").onTrue(new SetConeMode(m_limelight, m_clawMotor));
+    // controllerButtons_arm.get("6").onTrue(new SetConeMode(m_limelight,
+    // m_clawMotor));
     // // select cube mode
-    // controllerButtons_arm.get("7").onTrue(new SetCubeMode(m_limelight, m_clawMotor));
-    //close claw
-    // controllerButtons_arm.get("8").whileTrue(new ClawDecrementPosition(m_clawMotor));
-    //open claw
-    // controllerButtons_arm.get("9").whileTrue(new ClawIncrementPositionV2(m_clawMotor));
+    // controllerButtons_arm.get("7").onTrue(new SetCubeMode(m_limelight,
+    // m_clawMotor));
+    // close claw
+    // controllerButtons_arm.get("8").whileTrue(new
+    // ClawDecrementPosition(m_clawMotor));
+    // open claw
+    // controllerButtons_arm.get("9").whileTrue(new
+    // ClawIncrementPositionV2(m_clawMotor));
 
-    // controllerButtons_arm.get("10").onTrue(new Group_RetractAll(m_pivotMotor, m_extensionMotor));
+    // controllerButtons_arm.get("10").onTrue(new Group_RetractAll(m_pivotMotor,
+    // m_extensionMotor));
     // move arm to have a 90 degree with the floor
     // controllerButtons_arm.get("11").onTrue(new PivotAngle(m_pivotMotor, 90));
     // controllerButtons_arm.get("8").onTrue(resetEncodersCommand());
@@ -243,38 +279,41 @@ public class RobotContainer {
 
   public Command getAutoInput() {
     // String autoName = SmartDashboard.getString("Auto Selector", "Do Nothing");
-    // String autoName = m_autoChooser.getSelected(); // Make "Default" the default option
+    // String autoName = m_autoChooser.getSelected(); // Make "Default" the default
+    // option
     // System.out.println(autoName);
     // Command activeAutoGroup;
     // switch (autoName) { // switch between autonomous modes
-    //   // drive forwards and leave the community
-    //   case "Leave Community":
-    //     activeAutoGroup = new AutoGroup_LeaveCommunity(m_drivetrain);
-    //     break;
-    //   // place a game piece and leave the community
-    //   case "Place and Leave":
-    //     activeAutoGroup = new AutoGroup_PlaceAndLeave(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor, m_clawMotor);
-    //     break;
-    //   // Drive forward until it reaches the platform then balance
-    //   case "Balance":
-    //     activeAutoGroup = new AutoGroup_Balance(m_drivetrain, m_gyro);
-    //     break;
-    //   // Place a game piece then drive forward and balance
-    //   case "Place and Balance":
-    //     activeAutoGroup = new AutoGroup_PlaceAndBalance(m_drivetrain, m_gyro, m_pivotMotor, m_extensionMotor,
-    //         m_clawMotor);
-    //     break;
-    //   // Leave the community over the Charge station and get back on and balance
-    //   case "Leave and Balance":
-    //     activeAutoGroup = new AutoGroup_LeaveCommAndBalance(m_drivetrain, m_gyro);
-    //     break;
-    //   case "Move Test":
-    //     activeAutoGroup = new AutoGroup_MoveTest(m_drivetrain, m_gyro);
-    //     break;
-    //   // Default auto
-    //   default:
-    //     activeAutoGroup = new WaitCommand(0);
-    //     break;
+    // // drive forwards and leave the community
+    // case "Leave Community":
+    // activeAutoGroup = new AutoGroup_LeaveCommunity(m_drivetrain);
+    // break;
+    // // place a game piece and leave the community
+    // case "Place and Leave":
+    // activeAutoGroup = new AutoGroup_PlaceAndLeave(m_drivetrain, m_gyro,
+    // m_pivotMotor, m_extensionMotor, m_clawMotor);
+    // break;
+    // // Drive forward until it reaches the platform then balance
+    // case "Balance":
+    // activeAutoGroup = new AutoGroup_Balance(m_drivetrain, m_gyro);
+    // break;
+    // // Place a game piece then drive forward and balance
+    // case "Place and Balance":
+    // activeAutoGroup = new AutoGroup_PlaceAndBalance(m_drivetrain, m_gyro,
+    // m_pivotMotor, m_extensionMotor,
+    // m_clawMotor);
+    // break;
+    // // Leave the community over the Charge station and get back on and balance
+    // case "Leave and Balance":
+    // activeAutoGroup = new AutoGroup_LeaveCommAndBalance(m_drivetrain, m_gyro);
+    // break;
+    // case "Move Test":
+    // activeAutoGroup = new AutoGroup_MoveTest(m_drivetrain, m_gyro);
+    // break;
+    // // Default auto
+    // default:
+    // activeAutoGroup = new WaitCommand(0);
+    // break;
     // }
     // return activeAutoGroup;
     return m_autoChooser.getSelected();

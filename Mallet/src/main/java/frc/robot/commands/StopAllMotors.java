@@ -5,14 +5,13 @@ import frc.robot.subsystems.PivotSubPID;
 import frc.robot.subsystems.ClawSub;
 import frc.robot.subsystems.ExtensionSubPID;
 
-
-public class StopAllMotors extends CommandBase{
+public class StopAllMotors extends CommandBase {
     // Required Subsystems
     private PivotSubPID m_pivot;
     private ExtensionSubPID m_extender;
     private ClawSub m_claw;
 
-    public StopAllMotors(PivotSubPID pivot, ExtensionSubPID extender, ClawSub claw){
+    public StopAllMotors(PivotSubPID pivot, ExtensionSubPID extender, ClawSub claw) {
         m_pivot = pivot;
         m_extender = extender;
         m_claw = claw;
@@ -23,21 +22,23 @@ public class StopAllMotors extends CommandBase{
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     // Literally Stops Everything, All Arm Motors will stop
     @Override
     public void execute() {
         m_pivot.emergencyStop();
-        m_extender.emergencyStop();   
-        m_claw.emergencyStop(); 
+        m_extender.emergencyStop();
+        m_claw.emergencyStop();
     }
 
     // Called once the command ends or is interrupted.
     // This is never to be interupted
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 
     // Returns true when the command should end.
     @Override

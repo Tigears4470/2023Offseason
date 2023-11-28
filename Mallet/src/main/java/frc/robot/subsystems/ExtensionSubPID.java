@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -10,7 +11,7 @@ import frc.robot.Constants.K_ExtSub;
 import frc.robot.Constants.K_PivotSub;
 import java.lang.Math;
 
-public class ExtensionSubPID extends SubsystemBase{
+public class ExtensionSubPID extends SubsystemBase {
   // These are the Pivot Motors
   // Idle - Break on both
   // ID 6
@@ -18,14 +19,14 @@ public class ExtensionSubPID extends SubsystemBase{
   private final SparkMaxPIDController pid;
   private final RelativeEncoder encoder;
   private double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxVel, minVel, maxAcc, allowedErr;
-  
+
   // Limits range of motion
   private double desiredPosition = -11;
   private double maxPosition = 0;
   private double minPosition = -11;
-  
-  public ExtensionSubPID(){
-    if(K_PivotSub.isUsingPivot) {
+
+  public ExtensionSubPID() {
+    if (K_PivotSub.isUsingPivot) {
       motor = new CANSparkMax(6, MotorType.kBrushless);
       encoder = motor.getEncoder();
       pid = motor.getPIDController();
@@ -35,7 +36,7 @@ public class ExtensionSubPID extends SubsystemBase{
       // set conversion factor so getPosition returns degrees
 
       // arc length = r(14/16 of an inch?)*theta
-      encoder.setPositionConversionFactor(K_ExtSub.gearRadius*(360.0/K_ExtSub.gearRatio)/180*Math.PI); // .091629
+      encoder.setPositionConversionFactor(K_ExtSub.gearRadius * (360.0 / K_ExtSub.gearRatio) / 180 * Math.PI); // .091629
 
       encoder.setPosition(desiredPosition);
       desiredPosition = encoder.getPosition();
@@ -43,16 +44,16 @@ public class ExtensionSubPID extends SubsystemBase{
       // PID coefficients
       kP = 0.00000006015;
       kI = 0.0000005;
-      kD = 0; 
-      kIz = 0.005; 
-      kFF = 0.000101; 
-      kMaxOutput = .2; 
+      kD = 0;
+      kIz = 0.005;
+      kFF = 0.000101;
+      kMaxOutput = .2;
       kMinOutput = -.2;
       // Smart Motion Coefficients
 
       double rps = K_ExtSub.extInchesPerSecond / K_ExtSub.gearRadius / 2 / Math.PI;
-      maxVel = rps*60*K_ExtSub.gearRatio; // inches
-      maxAcc = maxVel*1.5;
+      maxVel = rps * 60 * K_ExtSub.gearRatio; // inches
+      maxAcc = maxVel * 1.5;
 
       // set PID coefficients
       pid.setP(kP);
@@ -102,21 +103,21 @@ public class ExtensionSubPID extends SubsystemBase{
     }
   }
 
-  //Return the encoder
-  public RelativeEncoder getEncoder(){
+  // Return the encoder
+  public RelativeEncoder getEncoder() {
     return encoder;
   }
 
-  //Return the maxPosition
-  public double getMaxPosition(){
+  // Return the maxPosition
+  public double getMaxPosition() {
     return maxPosition;
   }
 
   // sets the desired position
   // 0 - 10 inches
-  public void setPosition (double position) {
+  public void setPosition(double position) {
     position -= 11; // account for -10 to 0 range
-    if(K_PivotSub.isUsingPivot){
+    if (K_PivotSub.isUsingPivot) {
       if (position < minPosition)
         position = minPosition;
       if (position > maxPosition)
@@ -126,43 +127,44 @@ public class ExtensionSubPID extends SubsystemBase{
     pid.setReference(desiredPosition, CANSparkMax.ControlType.kSmartMotion);
   }
 
-  //Returns the current angle of the pivot
-  public double getCurrentPosition(){
-    if(K_PivotSub.isUsingPivot)
+  // Returns the current angle of the pivot
+  public double getCurrentPosition() {
+    if (K_PivotSub.isUsingPivot)
       return encoder.getPosition();
     return 0.0;
   }
 
-  //Returns the current desired angleMallet/src/main/java/frc/robot/subsystems/ExtensionSubPID.java
-  public double getDesiredPosition(){
-    if(K_PivotSub.isUsingPivot)
+  // Returns the current desired
+  // angleMallet/src/main/java/frc/robot/subsystems/ExtensionSubPID.java
+  public double getDesiredPosition() {
+    if (K_PivotSub.isUsingPivot)
       return desiredPosition;
     return 0.0;
   }
 
-  //Returns true or false depending on whether the arm's current position is within a tolerance of its desired position
+  // Returns true or false depending on whether the arm's current position is
+  // within a tolerance of its desired position
   public boolean withinTolerance() {
-    return Math.abs((getDesiredPosition()-getCurrentPosition())) < K_ExtSub.tolerance;
+    return Math.abs((getDesiredPosition() - getCurrentPosition())) < K_ExtSub.tolerance;
   }
 
   // Changes angle to aim for
   // If change is past min or max in either direction revert the change
-  public void changePosition (double increment) {
-    if(K_ExtSub.isUsingExt){
+  public void changePosition(double increment) {
+    if (K_ExtSub.isUsingExt) {
       // controller deadzone
       desiredPosition += increment;
-      if (desiredPosition > maxPosition) 
-        desiredPosition= maxPosition;
-      else if (desiredPosition < minPosition) 
-        desiredPosition= minPosition;
+      if (desiredPosition > maxPosition)
+        desiredPosition = maxPosition;
+      else if (desiredPosition < minPosition)
+        desiredPosition = minPosition;
     }
     pid.setReference(desiredPosition, CANSparkMax.ControlType.kSmartMotion);
   }
 
-
   // Stops the motor in case of emergency
   public void emergencyStop() {
-    if(K_PivotSub.isUsingPivot){
+    if (K_PivotSub.isUsingPivot) {
       motor.stopMotor();
     }
   }
@@ -181,28 +183,57 @@ public class ExtensionSubPID extends SubsystemBase{
       double minV = SmartDashboard.getNumber("Extension Min Velocity", 0);
       double maxA = SmartDashboard.getNumber("Extension Max Acceleration", 0);
       double allE = SmartDashboard.getNumber("Extension Allowed Closed Loop Error", 0);
-  
-      // if PID coefficients on SmartDashboard have changed, write new values to controller
-      if((p != kP)) { pid.setP(p); kP = p; }
-      if((i != kI)) { pid.setI(i); kI = i; }
-      if((d != kD)) { pid.setD(d); kD = d; }
-      if((iz != kIz)) { pid.setIZone(iz); kIz = iz; }
-      if((ff != kFF)) { pid.setFF(ff); kFF = ff; }
-      if((max != kMaxOutput) || (min != kMinOutput)) { 
-        pid.setOutputRange(min, max); 
-        kMinOutput = min; kMaxOutput = max; 
+
+      // if PID coefficients on SmartDashboard have changed, write new values to
+      // controller
+      if ((p != kP)) {
+        pid.setP(p);
+        kP = p;
       }
-      if((maxV != maxVel)) { pid.setSmartMotionMaxVelocity(maxV,0); maxVel = maxV; }
-      if((minV != minVel)) { pid.setSmartMotionMinOutputVelocity(minV,0); minVel = minV; }
-      if((maxA != maxAcc)) { pid.setSmartMotionMaxAccel(maxA,0); maxAcc = maxA; }
-      if((allE != allowedErr)) { pid.setSmartMotionAllowedClosedLoopError(allE,0); allowedErr = allE; }
+      if ((i != kI)) {
+        pid.setI(i);
+        kI = i;
+      }
+      if ((d != kD)) {
+        pid.setD(d);
+        kD = d;
+      }
+      if ((iz != kIz)) {
+        pid.setIZone(iz);
+        kIz = iz;
+      }
+      if ((ff != kFF)) {
+        pid.setFF(ff);
+        kFF = ff;
+      }
+      if ((max != kMaxOutput) || (min != kMinOutput)) {
+        pid.setOutputRange(min, max);
+        kMinOutput = min;
+        kMaxOutput = max;
+      }
+      if ((maxV != maxVel)) {
+        pid.setSmartMotionMaxVelocity(maxV, 0);
+        maxVel = maxV;
+      }
+      if ((minV != minVel)) {
+        pid.setSmartMotionMinOutputVelocity(minV, 0);
+        minVel = minV;
+      }
+      if ((maxA != maxAcc)) {
+        pid.setSmartMotionMaxAccel(maxA, 0);
+        maxAcc = maxA;
+      }
+      if ((allE != allowedErr)) {
+        pid.setSmartMotionAllowedClosedLoopError(allE, 0);
+        allowedErr = allE;
+      }
       // desiredAngle = SmartDashboard.getNumber("Set Position", 0);
-        /**
-         * As with other PID modes, Smart Motion is set by calling the
-         * setReference method on an existing pid object and setting
-         * the control type to kSmartMotion
-         */
-        pid.setReference(desiredPosition, CANSparkMax.ControlType.kSmartMotion);
+      /**
+       * As with other PID modes, Smart Motion is set by calling the
+       * setReference method on an existing pid object and setting
+       * the control type to kSmartMotion
+       */
+      pid.setReference(desiredPosition, CANSparkMax.ControlType.kSmartMotion);
     }
     SmartDashboard.putNumber("Extension Encoder", encoder.getPosition());
     SmartDashboard.putNumber("Extension Desired Angle", desiredPosition);

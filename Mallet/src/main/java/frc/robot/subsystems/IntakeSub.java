@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.K_IntakeSub;
 
-public class IntakeSub extends SubsystemBase{
+public class IntakeSub extends SubsystemBase {
   // Idle - Break
   // ID - 7
   private final CANSparkMax motor;
@@ -18,9 +18,9 @@ public class IntakeSub extends SubsystemBase{
   // -1 = grab, 0 = idle, 1 = throw
   private double direction;
   // controls speed of motor
-  
-  public IntakeSub(){
-    if(K_IntakeSub.isUsingIntake){
+
+  public IntakeSub() {
+    if (K_IntakeSub.isUsingIntake) {
       motor = new CANSparkMax(7, MotorType.kBrushless);
       encoder = motor.getEncoder();
       direction = 0;
@@ -39,15 +39,15 @@ public class IntakeSub extends SubsystemBase{
     }
   }
 
-  //Return the encoder
-  public RelativeEncoder getEncoder(){
+  // Return the encoder
+  public RelativeEncoder getEncoder() {
     return encoder;
   }
 
-  //Return if the intake is grabbing or throwing or neither
-  public double getDirection(){
-    if(K_IntakeSub.isUsingIntake){
-        return direction;
+  // Return if the intake is grabbing or throwing or neither
+  public double getDirection() {
+    if (K_IntakeSub.isUsingIntake) {
+      return direction;
     }
     return 0;
   }
@@ -60,30 +60,28 @@ public class IntakeSub extends SubsystemBase{
         motor.setVoltage(-2);
       else
         motor.setVoltage(0);
-    }  
-    else {
+    } else {
       if (direction > 0) {
         isIntaking = false;
         motor.setVoltage(direction * K_IntakeSub.OutVoltage);
-      }
-      else {
+      } else {
         isIntaking = true;
         motor.setVoltage(direction * K_IntakeSub.InVoltage);
       }
     }
-      
+
   }
 
   // returns current through motor
   public double getCurrent() {
-    if(K_IntakeSub.isUsingIntake){
+    if (K_IntakeSub.isUsingIntake) {
       return motor.getOutputCurrent();
     }
     return 0.0;
   }
 
   // Stops the motor in case of emergency
-  public void emergencyStop(){
+  public void emergencyStop() {
     motor.stopMotor();
   }
 

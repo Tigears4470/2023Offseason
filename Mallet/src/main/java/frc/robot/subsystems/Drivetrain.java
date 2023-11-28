@@ -26,7 +26,8 @@ public class Drivetrain extends SubsystemBase {
 
   // Set up the differential drive controller
   private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_left, m_right);
- // private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_brMotor, m_frMotor);
+  // private final DifferentialDrive m_diffDrive = new
+  // DifferentialDrive(m_brMotor, m_frMotor);
 
   // Set up the BuiltInAccelerometer
   private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
@@ -39,25 +40,28 @@ public class Drivetrain extends SubsystemBase {
     m_blMotor.setIdleMode(IdleMode.kBrake);
     m_frMotor.setIdleMode(IdleMode.kBrake);
     m_brMotor.setIdleMode(IdleMode.kBrake);
-    // We need to invert one side of the drivetrain so that positive voltages result in both sides moving forward. Depending on how your robot's gearbox is constructed, you might have to invert the left side instead.
+    // We need to invert one side of the drivetrain so that positive voltages result
+    // in both sides moving forward. Depending on how your robot's gearbox is
+    // constructed, you might have to invert the left side instead.
     m_brMotor.setInverted(true);
     m_frMotor.setInverted(true);
-    double factor = Constants.K_WHEEL_RADIUS_INCH * (360.0/Constants.K_DRIVETRAIN_GEAR_RATIO)/180*Math.PI;
+    double factor = Constants.K_WHEEL_RADIUS_INCH * (360.0 / Constants.K_DRIVETRAIN_GEAR_RATIO) / 180 * Math.PI;
     m_leftEncoder.setPositionConversionFactor(factor);
     m_rightEncoder.setPositionConversionFactor(factor);
     m_leftBackEncoder.setPositionConversionFactor(factor);
     m_rightBackEncoder.setPositionConversionFactor(factor);
-    
+
     resetEncoders();
   }
-  //testing single motor
+
+  // testing single motor
   public CANSparkMax getTestMotor() {
     return m_brMotor;
   }
 
   // negative is forward or to the right
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    m_diffDrive.arcadeDrive(.8*xaxisSpeed, .5*zaxisRotate);
+    m_diffDrive.arcadeDrive(.8 * xaxisSpeed, .5 * zaxisRotate);
   }
 
   public void resetEncoders() {
@@ -67,27 +71,27 @@ public class Drivetrain extends SubsystemBase {
     m_rightBackEncoder.setPosition(0);
   }
 
-  public void runTest(double speed){
+  public void runTest(double speed) {
     m_brMotor.set(speed);
   }
 
   public void setBalanceToCurrentPos(boolean backwards) {
     if (!backwards)
-      balancePosition = getAverageDistanceInch()-2.5;
-    else 
-      balancePosition = getAverageDistanceInch()+2.5;
+      balancePosition = getAverageDistanceInch() - 2.5;
+    else
+      balancePosition = getAverageDistanceInch() + 2.5;
   }
 
   public void balance() {
     // go in opposite direction of displacement
-    double speed = (balancePosition - getAverageDistanceInch())/10;
+    double speed = (balancePosition - getAverageDistanceInch()) / 10;
     if (Math.abs(speed) > .1) { // old for all was .45
       arcadeDrive(speed, 0);
     }
   }
 
   // For when the time calls for it, run this
-  public void stopMotors(){
+  public void stopMotors() {
     m_diffDrive.arcadeDrive(0, 0);
   }
 
@@ -99,11 +103,11 @@ public class Drivetrain extends SubsystemBase {
     return m_rightEncoder;
   }
 
-  public RelativeEncoder getRightBackEncoder(){
+  public RelativeEncoder getRightBackEncoder() {
     return m_rightBackEncoder;
   }
 
-  public RelativeEncoder getLeftBackEncoder(){
+  public RelativeEncoder getLeftBackEncoder() {
     return m_leftBackEncoder;
   }
 
@@ -111,7 +115,7 @@ public class Drivetrain extends SubsystemBase {
     return m_leftEncoder.getPosition();
   }
 
-  public double getLeftBackDistanceInch(){
+  public double getLeftBackDistanceInch() {
     return m_leftBackEncoder.getPosition();
   }
 
@@ -119,15 +123,15 @@ public class Drivetrain extends SubsystemBase {
     return m_rightEncoder.getPosition();
   }
 
-  public double getRightBackDistanceInch(){
+  public double getRightBackDistanceInch() {
     return m_rightBackEncoder.getPosition();
   }
 
-  public double getLeftAverageDistanceInch(){
+  public double getLeftAverageDistanceInch() {
     return ((getLeftDistanceInch()) + (getLeftBackDistanceInch())) / 2.0;
   }
 
-  public double getRightAverageDistanceInch(){
+  public double getRightAverageDistanceInch() {
     return ((getRightDistanceInch()) + (getRightBackDistanceInch())) / 2.0;
   }
 
@@ -170,7 +174,6 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Drivetrain Distance BR", m_rightBackEncoder.getPosition());
     SmartDashboard.putNumber("Drivetrain Distance BL", m_rightBackEncoder.getPosition());
     SmartDashboard.putNumber("AVG", getAverageDistanceInch());
-
 
   }
 }

@@ -3,7 +3,7 @@ package frc.robot.commands.claw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSub;
 
-public class IntakeThrow extends CommandBase{
+public class IntakeThrow extends CommandBase {
     private IntakeSub myIntake;
 
     // Creation Function of the Class

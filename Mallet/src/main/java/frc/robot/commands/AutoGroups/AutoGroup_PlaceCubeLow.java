@@ -18,26 +18,26 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutoGroup_PlaceCubeLow extends SequentialCommandGroup {
-    //Variables
-    public AutoGroup_PlaceCubeLow(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake, ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor){
-        
+    // Variables
+    public AutoGroup_PlaceCubeLow(Drivetrain drivetrain, GyroScope gyro, IntakeSub m_intake,
+            ExtensionSubPID m_extensionMotor, PivotSubPID m_pivotMotor) {
+
         System.out.println("AutoGroup_Place");
-        //Adding a drivetrain
-        //Adding Order of commands
+        // Adding a drivetrain
+        // Adding Order of commands
         addCommands(
-            new ResetEncoders(drivetrain),
-            new IntakeGrabInstant(m_intake),
-            new PivotMoveToAngleWait(m_pivotMotor, 9),
-            new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_LOW),
-            Commands.deadline(new WaitCommand(3), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_LOW, false),
-            new ExtenderSetPositionWait(m_extensionMotor, Constants.K_EXT_AUTO_LOW)),
-            new IntakeThrowInstant(m_intake),
-            new WaitCommand(0.5),
-            new IntakeStop(m_intake),
-            // in case it gets stuck on the platforms
-            Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_LOW, true),
-            new AutoGroup_RetractExtension(m_extensionMotor)),
-            new AutoGroup_LowerPivot(m_pivotMotor)
-        );
+                new ResetEncoders(drivetrain),
+                new IntakeGrabInstant(m_intake),
+                new PivotMoveToAngleWait(m_pivotMotor, 9),
+                new PivotMoveToAngleWait(m_pivotMotor, Constants.K_ANGLE_AUTO_LOW),
+                Commands.deadline(new WaitCommand(3), new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_LOW, false),
+                        new ExtenderSetPositionWait(m_extensionMotor, Constants.K_EXT_AUTO_LOW)),
+                new IntakeThrowInstant(m_intake),
+                new WaitCommand(0.5),
+                new IntakeStop(m_intake),
+                // in case it gets stuck on the platforms
+                Commands.parallel(new MoveDistance(drivetrain, Constants.K_MOVE_AUTO_LOW, true),
+                        new AutoGroup_RetractExtension(m_extensionMotor)),
+                new AutoGroup_LowerPivot(m_pivotMotor));
     }
 }

@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+
 import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetConeMode extends CommandBase {
     private final Limelight m_limelight;
+
     public SetConeMode(Limelight limelight) {
         m_limelight = limelight;
         addRequirements(limelight);
@@ -21,18 +23,17 @@ public class SetConeMode extends CommandBase {
 
     // Called every time the scheduler runs while the command is scheduled.
 
-    // CHANGE TO IMPLEMENT TURNANGLE WHEN MERGE 
+    // CHANGE TO IMPLEMENT TURNANGLE WHEN MERGE
     @Override
     public void execute() {
         // sets limelight to look for retroreflective tape
         m_limelight.setPipeline(0);
-        }
-
-
+    }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 
     // Returns true when the command should end.
     @Override

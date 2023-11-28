@@ -23,7 +23,7 @@ public class ClawDecrementPosition extends CommandBase {
     // Sets open position closer to clamped position
     @Override
     public void execute() {
-        m_claw.changeOpenPosition(-20.0/50.0);
+        m_claw.changeOpenPosition(-20.0 / 50.0);
         m_claw.moveClaw();
     }
 

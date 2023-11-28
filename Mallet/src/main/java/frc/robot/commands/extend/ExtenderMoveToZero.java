@@ -3,13 +3,12 @@ package frc.robot.commands.extend;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ExtensionSubPID;
 
-
-public class ExtenderMoveToZero extends CommandBase{
+public class ExtenderMoveToZero extends CommandBase {
     // Required Subsystems
     private ExtensionSubPID m_extender;
 
     // Creation Function of the Class
-    public ExtenderMoveToZero(ExtensionSubPID ext){
+    public ExtenderMoveToZero(ExtensionSubPID ext) {
         m_extender = ext;
         addRequirements(m_extender);
     }
@@ -27,9 +26,11 @@ public class ExtenderMoveToZero extends CommandBase{
     }
 
     // Called once the command ends or is interrupted.
-    // Nothing is called here as it is covered already in the subsystem to stop the motor.
+    // Nothing is called here as it is covered already in the subsystem to stop the
+    // motor.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 
     // Returns true when the command should end.
     @Override
