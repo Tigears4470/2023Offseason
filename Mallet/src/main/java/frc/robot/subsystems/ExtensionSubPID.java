@@ -36,7 +36,7 @@ public class ExtensionSubPID extends SubsystemBase {
       // set conversion factor so getPosition returns degrees
 
       // arc length = r(14/16 of an inch?)*theta
-      encoder.setPositionConversionFactor(K_ExtSub.gearRadius * (360.0 / K_ExtSub.gearRatio) / 180 * Math.PI); // .091629
+      encoder.setPositionConversionFactor(2 * K_ExtSub.gearRadius * Math.PI / K_ExtSub.gearRatio); // .091629
 
       encoder.setPosition(desiredPosition);
       desiredPosition = encoder.getPosition();

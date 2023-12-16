@@ -45,7 +45,7 @@ public class Drivetrain extends SubsystemBase {
     // constructed, you might have to invert the left side instead.
     m_brMotor.setInverted(true);
     m_frMotor.setInverted(true);
-    double factor = Constants.K_WHEEL_RADIUS_INCH * (360.0 / Constants.K_DRIVETRAIN_GEAR_RATIO) / 180 * Math.PI;
+    double factor = 2 * Math.PI * Constants.K_WHEEL_RADIUS_INCH / Constants.K_DRIVETRAIN_GEAR_RATIO;
     m_leftEncoder.setPositionConversionFactor(factor);
     m_rightEncoder.setPositionConversionFactor(factor);
     m_leftBackEncoder.setPositionConversionFactor(factor);
